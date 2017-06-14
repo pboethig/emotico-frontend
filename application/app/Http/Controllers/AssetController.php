@@ -101,4 +101,9 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
 
         return redirect()->away($url);
     }
+
+    public function import()
+    {
+        return view('bread.assets.import');
+    }
 }

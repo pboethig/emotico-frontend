@@ -26,7 +26,7 @@
                         <div class="flex panel-bordered">
                             <div id="left">
                                 <div style="margin: 5px">
-                                    @include('media.datatable')
+                                    @include('bread.assets.datatable')
                                 </div>
                             </div>
                         </div>

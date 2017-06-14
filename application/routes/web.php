@@ -13,9 +13,16 @@
 
 $namespacePrefix = '\\'.config('voyager.controllers.namespace').'\\';
 
+/**
+ * Emoticoroutes
+ */
 Route::get('/admin/assets/downloadHighres', 'AssetController@downloadHighres');
+Route::get('/admin/assets/import', 'AssetController@import');
 
 
+/**
+ * Voyager routes
+ */
 Route::get('/', function ()
 {
     header("location: admin");
@@ -30,8 +37,4 @@ Route::group(['prefix' => 'admin'], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/admin/media/import', 'VoyagerMediaController@import');
-
 Route::post('/webhooks/thumbnailFinedataCreated', 'WebHookController@thumbnailFinedataCreated');
-

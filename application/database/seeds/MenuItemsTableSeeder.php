@@ -128,7 +128,9 @@ class MenuItemsTableSeeder extends Seeder
                 'title'      => 'Tools',
                 'url'        => '',
             ]);
-            if (!$toolsMenuItem->exists) {
+            
+            if (!$toolsMenuItem->exists)
+            {
                 $toolsMenuItem->fill([
                     'target'     => '_self',
                     'icon_class' => 'voyager-tools',

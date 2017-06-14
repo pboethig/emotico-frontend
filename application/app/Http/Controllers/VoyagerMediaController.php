@@ -25,9 +25,4 @@ class VoyagerMediaController extends \TCG\Voyager\Http\Controllers\VoyagerMediaC
 
         return $view;
     }
-
-    public function import()
-    {
-        return view('media.import');
-    }
 }
