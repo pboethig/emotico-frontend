@@ -1,0 +1,32 @@
+language: bash
+sudo: required
+services:
+  - docker
+
+env:
+  matrix:
+    - PHP_VERSION=71 BUILD_SERVICE="applications nginx mysql"
+    - PHP_VERSION=71 BUILD_SERVICE=workspace
+    - PHP_VERSION=71 BUILD_SERVICE=php-fpm
+
+    - HUGO_VERSION=0.20.2
+
+# Installing a newer Docker version
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+
+script: ./travis-build.sh
+
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: docs
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: eqs
+    condition: -n "${HUGO_VERSION}"
+
+notifications:
+  email: false

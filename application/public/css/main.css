@@ -1,0 +1,23 @@
+.editthumbnaillist div.thumbnail
+{
+    border: 1px solid lightgrey;
+    padding:5px
+
+}
+
+h4.pageName
+{
+    margin:0;
+    padding:0;
+}
+
+.drop-shadow, div.panel-bordered, .table-responsive  {
+    -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, .1);
+}
+
+hr
+{
+    margin: 4px 0 4px 0;
+}
+

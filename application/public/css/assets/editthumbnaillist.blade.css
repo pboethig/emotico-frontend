@@ -1,0 +1,17 @@
+.editthumbnaillist
+{
+    margin: 10px auto;
+}
+
+.editthumbnaillist div.thumbnail
+{
+    border: 1px solid lightgrey;
+    padding:5px
+
+}
+
+.editthumbnaillist h4.pageName
+{
+    margin:0;
+    padding:0;
+}
