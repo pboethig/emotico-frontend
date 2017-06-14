@@ -37,3 +37,4 @@ mysql -u root -p default <path to dump>.sql
 ./vendor/bin/phpunit tests
 ```
 # emotico-frontend
+# emotico-frontend
