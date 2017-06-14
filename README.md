@@ -1,5 +1,5 @@
 ## Emotico Frontend
-- this laravel project is the frontend for the emotico media service
+- this laravel / voyager project is the frontend for the emotico media service
 
 ## prerequisites
 - linux
@@ -18,10 +18,10 @@ docker-compose-up -d
 composer install
 ```
 
-## Install basedate
+## Install voyager and emotico basedate
 ```sh
-php artisan migrate
-php artisan db:seed
+php artisan voyager:install
+php artisan db:seed --class=EmoticoDatabaseSeeder
 ```
 
 - surf to http://localhost:8080
