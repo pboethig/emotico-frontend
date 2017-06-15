@@ -56,7 +56,7 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($model);
 
-        $view = "bread.$slug.browse";
+        $view = "bread.assets.browse";
 
         return view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
     }

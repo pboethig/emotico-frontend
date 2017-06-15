@@ -79,9 +79,6 @@
                                                 @else
                                                 {{ $data->{$row->field} }}
                                                 @endif
-                                            @elseif($row->type == 'text')
-                                                @include('voyager::multilingual.input-hidden-bread-browse')
-                                                <div class="readmore">{{ strlen( $data->{$row->field} ) > 200 ? substr($data->{$row->field}, 0, 200) . ' ...' : $data->{$row->field} }}</div>
                                             @elseif($row->type == 'text_area')
                                                 @include('voyager::multilingual.input-hidden-bread-browse')
                                                 <div class="readmore">{{ strlen( $data->{$row->field} ) > 200 ? substr($data->{$row->field}, 0, 200) . ' ...' : $data->{$row->field} }}</div>

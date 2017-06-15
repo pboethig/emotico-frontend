@@ -63,8 +63,8 @@
 
             }).fail(function(data)
             {
-                alert('Ann error occured on serverside. Please contact administrator');
-            });;
+
+            });
 
         });
 

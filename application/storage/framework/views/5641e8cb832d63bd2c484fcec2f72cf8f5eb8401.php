@@ -83,9 +83,6 @@
                                                 <?php echo e($data->{$row->field}); ?>
 
                                                 <?php endif; ?>
-                                            <?php elseif($row->type == 'text'): ?>
-                                                <?php echo $__env->make('voyager::multilingual.input-hidden-bread-browse', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-                                                <div class="readmore"><?php echo e(strlen( $data->{$row->field} ) > 200 ? substr($data->{$row->field}, 0, 200) . ' ...' : $data->{$row->field}); ?></div>
                                             <?php elseif($row->type == 'text_area'): ?>
                                                 <?php echo $__env->make('voyager::multilingual.input-hidden-bread-browse', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                                                 <div class="readmore"><?php echo e(strlen( $data->{$row->field} ) > 200 ? substr($data->{$row->field}, 0, 200) . ' ...' : $data->{$row->field}); ?></div>
