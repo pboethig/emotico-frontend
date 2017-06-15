@@ -1,7 +1,14 @@
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js" type="text/javascript"/>
+<script src="<?php echo e(mix('js/app.js')); ?>"></script>
     <form id="uploadform" class="dropzone"  method="post" enctype="multipart/form-data"></form>
     <hr/>
         <label class="float-left">Files in Queue: </label>
         <div class="addedFiles">0</div>
+        <span class="fileupload-process" style="position:relative;left:-90px">
+          <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-bar progress-bar-info" style="width:0%;" data-dz-uploadprogress></div>
+          </div>
+        </span>
         <hr class="clear-both"/>
         <div class="col-sm-9" style="overflow-y: scroll; max-height: 800px">
             <table class="table" id="message">
@@ -32,15 +39,22 @@
          * Init scope before including import script
          * @type  {string}
          */
-        assetStoreUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/store";
-        triggerProgressUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/process";
-        pingInDesignServerUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/indesignserver/ping";
-        websocketUrl = "<?php echo e(config('app')['mediaconverter.public.websocket.url']); ?>";
-        allowedFormats = ".jpeg,.jpg,.png,.gif,.eps,.tiff,.tif,.psd,.indd,.mp4,.mov,.pdf,.divx,.mkv,.wmv";
-    </script>
+        $(function()
+        {
 
-    <script src="<?php echo e(mix('js/app/asset.import.js')); ?>" type="text/javascript"></script>
-    <?php echo $__env->yieldPushContent('scripts'); ?>
-    <!--
-    <script type="text/javascript" src="<?php echo e(asset('js/app/asset.import.js')); ?>"></script>
--->
+            assetStoreUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/store";
+            triggerProgressUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/process";
+            pingInDesignServerUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/indesignserver/ping";
+            websocketUrl = "<?php echo e(config('app')['mediaconverter.public.websocket.url']); ?>";
+            allowedFormats = ".jpeg,.jpg,.png,.gif,.eps,.tiff,.tif,.psd,.indd,.mp4,.mov,.pdf,.divx,.mkv,.wmv";
+
+
+            var uploadForm = new UploadForm();
+
+            uploadForm.init();
+        });
+
+    </script>
+    <script src="<?php echo e(mix('js/app/UploadForm.js')); ?>" type="text/javascript"></script>
+
+
