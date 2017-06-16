@@ -1,5 +1,6 @@
 /**
  * Handles Uploadform
+ *
  * @see views/bread/assets/datatable.blade.php
  * @constructor
  */
@@ -18,21 +19,27 @@ function UploadForm()
 
         this.attachWebsockets();
 
-        this.setMessageInfosFromImageQueue();
+        this.setMessageInfosFromQueue('imagethumbnails');
 
-        this.startMessageConsumer();
+        this.setMessageInfosFromQueue('videothumbnails');
+
+        this.setMessageInfosFromQueue('indesignthumbnails');
+
+        this.startMessageConsumer(imagethumbnailConsumerCommand);
+
+        this.startMessageConsumer(videothumbnailConsumerCommand);
     };
 
     /**
      * Calls Emotico api to get left messages in messagequeue
      */
-    this.setMessageInfosFromImageQueue = function()
+    this.setMessageInfosFromQueue = function(thumbnailtype)
     {
         var that = this;
 
         setInterval(function() {
-            $.get('/admin/queue/imagethumbnails/info' + '?time'+Date.now(), function( data ) {
-                that.setMessageCount('imageQueueCount', data.messages)
+            $.get('/admin/queue/' + thumbnailtype + '/info' + '?time'+Date.now(), function( data ) {
+                that.setMessageCount(thumbnailtype, data.messages)
             });
         }, 2000);
     };
@@ -47,7 +54,6 @@ function UploadForm()
         $("."+queueType).html(count);
     };
 
-
     /**
      * set base variables vars
      */
@@ -55,8 +61,6 @@ function UploadForm()
 
         Dropzone.autodiscover = false;
     };
-
-
 
     /**
      * Pings INDD Server and types out message
@@ -83,13 +87,14 @@ function UploadForm()
     /**
      * Start messaageque consumer
      */
-    this.startMessageConsumer = function ()
+    this.startMessageConsumer = function (command)
     {
-        $.get("/admin/queue/" + imagethumbnailComsumerCommand + "/startConsumer?time"+Date.now(), function( data ) {
+        $.get("/admin/queue/" + command + "/startConsumer?time"+Date.now(), function( data )
+        {
 
         }).fail(function(data)
         {
-            //scope.countDownQueue();
+
         });
     };
 
@@ -108,7 +113,7 @@ function UploadForm()
                 maxFilesize: 600, // MB
                 addRemoveLinks: false,
                 uploadMultiple: true,
-                parallelUploads: 10,
+                parallelUploads: 20,
                 maxFiles: 500,
                 autoProcessQueue: true,
                 previewTemplate: "<div></div>",
@@ -148,12 +153,12 @@ function UploadForm()
 
             }).fail(function(data)
             {
-                //scope.countDownQueue();
             });
 
             if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
 
-                scope.startMessageConsumer();
+                scope.startMessageConsumer(imagethumbnailConsumerCommand);
+                scope.startMessageConsumer(videothumbnailConsumerCommand);
             }
         });
 
@@ -179,6 +184,28 @@ function UploadForm()
                 }
             }
         });
+    };
+
+
+    /**
+     * Get thumbnailUrl from websocketMessage
+     * @param message
+     * @returns {string}
+     */
+    this.getThumbnailUrl = function (message) {
+
+        var thumbnailurl="";
+
+        if(message.thumbnailList[0] == undefined)
+        {
+            thumbnailurl = 'http://quantachrome.com/forms06/img/Not_available_icon.jpg';
+        }
+        else
+        {
+            thumbnailurl = message.thumbnailList[0];
+        }
+
+        return thumbnailurl;
     };
 
     /**
@@ -226,9 +253,11 @@ function UploadForm()
                 {
                     var message = JSON.parse(payload.msg).message;
 
+                    console.log(message);
+                    
                     if($('#'+message.ticketId).length > 0) return false;
 
-                    $('#message').append('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive" src="/images/loading_blue.gif" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
+                    $('#message').append('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive drop-shadow" src="/images/loading_blue.gif" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
 
                     document.querySelector("#total-progress .progress-bar").style.width = 50 + "%";
 
@@ -247,26 +276,18 @@ function UploadForm()
                 {
                     var message = JSON.parse(payload.msg).message;
 
-                    var thumbnailurl="";
-
-                    //suppress video lowres generation
                     if(message.event =="ffmpeg.lowres.created") return;
 
-                    if(message.thumbnailList[0]== undefined)
-                    {
-                        thumbnailurl = 'http://quantachrome.com/forms06/img/Not_available_icon.jpg';
-                    }
-                    else
-                    {
-                        thumbnailurl = message.thumbnailList[0];
-                    }
+                    var thumbnailurl = that.getThumbnailUrl(message);
 
                     /**
                      * Current browserwindow was closed.
                      */
                     if($('#'+message.ticketId).length == 0)
                     {
-                        $('#message').prepend('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive" src="' + thumbnailurl +'" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
+                        $('#message').prepend('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive drop-shadow" src="' + thumbnailurl +'" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
+                        $('#row_'+message.ticketId).fadeOut(100);
+
                     }
                     else
                     {
@@ -274,10 +295,6 @@ function UploadForm()
                     }
 
                     document.querySelector("#total-progress .progress-bar").style.width = 100 + "%";
-
-                    $('html, body').animate({
-                        scrollTop: $("#row_" + message.ticketId).offset().top
-                    }, 500);
                 }
                 catch(Exception)
                 {
@@ -292,17 +309,12 @@ function UploadForm()
             {
                 try
                 {
+
                     var message = JSON.parse(payload.msg).message;
 
                     $('#'+message.ticketId).attr('src','http://quantachrome.com/forms06/img/Not_available_icon.jpg');
 
                     var errorNode = document.createElement('div');
-
-                    errorNode.innerHTML = that.buildErrorMessageMarkup(message);
-
-                    document.getElementById('error_' + message.ticketId).appendChild(errorNode);
-
-
                 }
                 catch(ex)
                 {

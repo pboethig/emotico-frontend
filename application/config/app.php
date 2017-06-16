@@ -233,9 +233,18 @@ return [
     /**
      * Mediaconverter
      */
+    //urls
     'mediaconverter.public.websocket.url'=>env('MEDIACONVERTER_PUBLIC_WEBSOCKET_URL'),
     'mediaconverter.public.web.url'=>env('MEDIACONVERTER_PUBLIC_WEB_URL'),
     'mediaconverter.public.storage.url'=>env('MEDIACONVERTER_PUBLIC_STORAGE_URL'),
+
+    //queues
     'mediaconverter.queue.imagine.thumbnails'=>env('MEDIACONVERTER_QUEUE_IMAGINE_THUMBNAILS'),
+    'mediaconverter.queue.ffmpeg.thumbnails'=>env('MEDIACONVERTER_QUEUE_FFMPEG_THUMBNAILS'),
+    'mediaconverter.queue.indesign.thumbnails'=>env('MEDIACONVERTER_QUEUE_INDESIGN_THUMBNAILS'),
+
+    //consumercomands
     'mediaconverter.queue.imagine.consumercommand'=>env('MEDIACONVERTER_QUEUE_IMAGINE_CONSUMERCOMMAND'),
+    'mediaconverter.queue.ffmpeg.consumercommand'=>env('MEDIACONVERTER_QUEUE_FFMPEG_CONSUMERCOMMAND'),
+    'mediaconverter.queue.indesign.consumercommand'=>env('MEDIACONVERTER_QUEUE_INDESIGN_CONSUMERCOMMAND'),
 ];

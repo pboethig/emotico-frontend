@@ -16,9 +16,19 @@ $namespacePrefix = '\\'.config('voyager.controllers.namespace').'\\';
 /**
  * Emoticoroutes
  */
+
+/**
+ * Assets
+ */
 Route::get('/admin/assets/downloadHighres', 'AssetController@downloadHighres');
 Route::get('/admin/assets/import', 'AssetController@import');
+
+/**
+ * Queue
+ */
 Route::get('/admin/queue/imagethumbnails/info', 'QueueController@getImageThumbnailQueue');
+Route::get('/admin/queue/videothumbnails/info', 'QueueController@getVideoThumbnailQueue');
+Route::get('/admin/queue/indesignthumbnails/info', 'QueueController@getIndesignThumbnailQueue');
 Route::get('/admin/queue/{command}/startConsumer', 'QueueController@startConsumer');
 
 /**

@@ -28,7 +28,27 @@ class Config
     /**
      * @var string
      */
-    public static $imagethumbnailComsumerCommand;
+    public static $indesignThumbnailQueue;
+
+    /**
+     * @var string
+     */
+    public static $videoThumbnailQueue;
+
+    /**
+     * @var string
+     */
+    public static $imagethumbnailConsumerCommand;
+
+    /**
+     * @var string
+     */
+    public static $videothumbnailConsumerCommand;
+
+    /**
+     * @var string
+     */
+    public static $indesignthumbnailConsumerCommand;
 
     /**
      * Config constructor.
@@ -39,8 +59,22 @@ class Config
 
         self::$websocketUrl= config('app')['mediaconverter.public.websocket.url'];
 
+        /**
+         * Queues
+         */
         self::$imageThumbnailQueue = config('app')['mediaconverter.queue.imagine.thumbnails'];
 
-        self::$imagethumbnailComsumerCommand = config('app')['mediaconverter.queue.imagine.consumercommand'];
+        self::$videoThumbnailQueue = config('app')['mediaconverter.queue.ffmpeg.thumbnails'];
+
+        self::$indesignThumbnailQueue = config('app')['mediaconverter.queue.indesign.thumbnails'];
+
+        /**
+         * Commands
+         */
+        self::$imagethumbnailConsumerCommand = config('app')['mediaconverter.queue.imagine.consumercommand'];
+
+        self::$videothumbnailConsumerCommand = config('app')['mediaconverter.queue.ffmpeg.consumercommand'];
+
+        self::$indesignthumbnailConsumerCommand = config('app')['mediaconverter.queue.indesign.consumercommand'];
     }
 }

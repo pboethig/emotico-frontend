@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
  */
 class QueueController extends \TCG\Voyager\Http\Controllers\VoyagerBreadController
 {
-
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -22,6 +21,28 @@ class QueueController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         $queueInfo = new Queue(new Config());
         
         return response()->json($queueInfo->getQueue(Config::$imageThumbnailQueue));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getVideoThumbnailQueue(Request $request)
+    {
+        $queueInfo = new Queue(new Config());
+
+        return response()->json($queueInfo->getQueue(Config::$videoThumbnailQueue));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getIndesignThumbnailQueue(Request $request)
+    {
+        $queueInfo = new Queue(new Config());
+
+        return response()->json($queueInfo->getQueue(Config::$indesignThumbnailQueue));
     }
 
     /**

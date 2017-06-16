@@ -2,16 +2,16 @@
 <script src="<?php echo e(mix('js/app.js')); ?>"></script>
     <form id="uploadform" class="dropzone"  method="post" enctype="multipart/form-data"></form>
     <hr/>
-        <label>Files in ImageQueue: </label>
-        <div class="imageQueueCount">0</div>
+        <label><strong>Files in ImageQueue: </strong></label>
+        <div class="imagethumbnails">0</div>
         <hr class="clear-both"/>
 
-        <label>Files in VideoQueue: </label>
-        <div class="videoQueueCount">0</div>
+        <label><strong>Files in VideoQueue: </strong></label>
+        <div class="videothumbnails">0</div>
         <hr class="clear-both"/>
 
-        <label >Files in InDesignQueue:</label>
-        <div class="indesignQueueCount">0</div>
+        <label ><strong>Files in InDesignQueue:</strong></label>
+        <div class="indesignthumbnails">0</div>
 
         <hr class="clear-both"/>
         <span class="fileupload-process">
@@ -20,7 +20,7 @@
           </div>
         </span>
 
-        <div class="col-sm-9" style="overflow-y: scroll; max-height: 800px">
+        <div class="col-sm-9">
             <table class="table" id="message">
                 <thead class="thead-default">
                 <tr>
@@ -55,11 +55,13 @@
             triggerProgressUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/process";
             pingInDesignServerUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/indesignserver/ping";
             websocketUrl = "<?php echo e(config('app')['mediaconverter.public.websocket.url']); ?>";
-            allowedFormats = ".jpeg,.jpg,.png,.gif,.eps,.tiff,.tif,.psd,.indd,.mp4,.mov,.pdf,.divx,.mkv,.wmv";
+            allowedFormats = ".jpeg,.jpg,.png,.gif,.eps,.tiff,.tif,.psd,.indd,.mp4,.mov,.pdf,.divx,.mkv,.wmv,.3gp,.m4v";
 
             <?php $queueConfig = new \App\Repository\Emotico\Config()?>
 
-            imagethumbnailComsumerCommand = "<?php echo e($queueConfig::$imagethumbnailComsumerCommand); ?>";
+            imagethumbnailConsumerCommand = "<?php echo e($queueConfig::$imagethumbnailConsumerCommand); ?>";
+            videothumbnailConsumerCommand = "<?php echo e($queueConfig::$videothumbnailConsumerCommand); ?>";
+            indesignthumbnailConsumerCommand = "<?php echo e($queueConfig::$indesignthumbnailConsumerCommand); ?>";
 
             var uploadForm = new UploadForm();
 
