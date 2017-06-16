@@ -95,6 +95,10 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         return view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function downloadHighres(Request $request)
     {
         $url = Url::getDownloadHighresUrl($request->get('file'));
@@ -102,6 +106,9 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         return redirect()->away($url);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function import()
     {
         return view('bread.assets.import');

@@ -2,14 +2,24 @@
 <script src="<?php echo e(mix('js/app.js')); ?>"></script>
     <form id="uploadform" class="dropzone"  method="post" enctype="multipart/form-data"></form>
     <hr/>
-        <label class="float-left">Files in Queue: </label>
-        <div class="addedFiles">0</div>
-        <span class="fileupload-process" style="position:relative;left:-90px">
+        <label>Files in ImageQueue: </label>
+        <div class="imageQueueCount">0</div>
+        <hr class="clear-both"/>
+
+        <label>Files in VideoQueue: </label>
+        <div class="videoQueueCount">0</div>
+        <hr class="clear-both"/>
+
+        <label >Files in InDesignQueue:</label>
+        <div class="indesignQueueCount">0</div>
+
+        <hr class="clear-both"/>
+        <span class="fileupload-process">
           <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
               <div class="progress-bar progress-bar-info" style="width:0%;" data-dz-uploadprogress></div>
           </div>
         </span>
-        <hr class="clear-both"/>
+
         <div class="col-sm-9" style="overflow-y: scroll; max-height: 800px">
             <table class="table" id="message">
                 <thead class="thead-default">
@@ -41,13 +51,15 @@
          */
         $(function()
         {
-
             assetStoreUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/store";
             triggerProgressUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/assets/process";
             pingInDesignServerUrl = "<?php echo e(config('app')['mediaconverter.public.web.url']); ?>/indesignserver/ping";
             websocketUrl = "<?php echo e(config('app')['mediaconverter.public.websocket.url']); ?>";
             allowedFormats = ".jpeg,.jpg,.png,.gif,.eps,.tiff,.tif,.psd,.indd,.mp4,.mov,.pdf,.divx,.mkv,.wmv";
 
+            <?php $queueConfig = new \App\Repository\Emotico\Config()?>
+
+            imagethumbnailComsumerCommand = "<?php echo e($queueConfig::$imagethumbnailComsumerCommand); ?>";
 
             var uploadForm = new UploadForm();
 

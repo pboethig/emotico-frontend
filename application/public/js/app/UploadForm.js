@@ -6,18 +6,6 @@
 function UploadForm()
 {
     /**
-     * Counts files
-     * @type {number}
-     */
-    this.addedFiles = 0;
-
-    /**
-     * Maximum ammount of added files
-     * @type {number}
-     */
-    this.maxAddedFiles=0;
-
-    /**
      * Constructor
      */
     this.init = function()
@@ -29,7 +17,36 @@ function UploadForm()
         this.buildDropzone();
 
         this.attachWebsockets();
+
+        this.setMessageInfosFromImageQueue();
+
+        this.startMessageConsumer();
     };
+
+    /**
+     * Calls Emotico api to get left messages in messagequeue
+     */
+    this.setMessageInfosFromImageQueue = function()
+    {
+        var that = this;
+
+        setInterval(function() {
+            $.get('/admin/queue/imagethumbnails/info' + '?time'+Date.now(), function( data ) {
+                that.setMessageCount('imageQueueCount', data.messages)
+            });
+        }, 2000);
+    };
+
+    /**
+     * Sets the serviceresponse from emotico backend to count messages in queues
+     * @param queueType
+     * @param count
+     */
+    this.setMessageCount = function (queueType, count)
+    {
+        $("."+queueType).html(count);
+    };
+
 
     /**
      * set base variables vars
@@ -39,28 +56,7 @@ function UploadForm()
         Dropzone.autodiscover = false;
     };
 
-    /**
-     * Downcounts items in queue
-     */
-    this.countDownQueue = function ()
-    {
-        if(this.addedFiles < 2)
-        {
-            this.addedFiles = 0;
-        }
 
-        $(".addedFiles").html(this.addedFiles--);
-    };
-
-    /**
-     * Upcounts Items in queue
-     */
-    this.countUpQueue = function()
-    {
-        this.maxAddedFiles++;
-
-        $(".addedFiles").html(this.addedFiles++);
-    };
 
     /**
      * Pings INDD Server and types out message
@@ -85,6 +81,19 @@ function UploadForm()
     };
 
     /**
+     * Start messaageque consumer
+     */
+    this.startMessageConsumer = function ()
+    {
+        $.get("/admin/queue/" + imagethumbnailComsumerCommand + "/startConsumer?time"+Date.now(), function( data ) {
+
+        }).fail(function(data)
+        {
+            //scope.countDownQueue();
+        });
+    };
+
+    /**
      * Setup dropzone
      */
     this.buildDropzone = function ()
@@ -99,7 +108,7 @@ function UploadForm()
                 maxFilesize: 600, // MB
                 addRemoveLinks: false,
                 uploadMultiple: true,
-                parallelUploads: 1,
+                parallelUploads: 10,
                 maxFiles: 500,
                 autoProcessQueue: true,
                 previewTemplate: "<div></div>",
@@ -126,8 +135,6 @@ function UploadForm()
         myDropzone.on("addedfile", function (file)
         {
             document.querySelector("#total-progress .progress-bar").style.width = 10 + "%";
-
-            scope.countUpQueue();
         });
 
         /**
@@ -141,9 +148,13 @@ function UploadForm()
 
             }).fail(function(data)
             {
-                that.countDownQueue();
+                //scope.countDownQueue();
             });
 
+            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+
+                scope.startMessageConsumer();
+            }
         });
 
         /**
@@ -217,7 +228,7 @@ function UploadForm()
 
                     if($('#'+message.ticketId).length > 0) return false;
 
-                    $('#message').prepend('<tr><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive" src="/images/loading_blue.gif" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
+                    $('#message').append('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive" src="/images/loading_blue.gif" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
 
                     document.querySelector("#total-progress .progress-bar").style.width = 50 + "%";
 
@@ -255,7 +266,7 @@ function UploadForm()
                      */
                     if($('#'+message.ticketId).length == 0)
                     {
-                        $('#message').prepend('<tr><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive" src="' + thumbnailurl +'" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
+                        $('#message').prepend('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive" src="' + thumbnailurl +'" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
                     }
                     else
                     {
@@ -264,7 +275,9 @@ function UploadForm()
 
                     document.querySelector("#total-progress .progress-bar").style.width = 100 + "%";
 
-                    that.countDownQueue();
+                    $('html, body').animate({
+                        scrollTop: $("#row_" + message.ticketId).offset().top
+                    }, 500);
                 }
                 catch(Exception)
                 {
@@ -289,7 +302,7 @@ function UploadForm()
 
                     document.getElementById('error_' + message.ticketId).appendChild(errorNode);
 
-                    that.countDownQueue();
+
                 }
                 catch(ex)
                 {

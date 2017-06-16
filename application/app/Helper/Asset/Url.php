@@ -41,7 +41,9 @@ class Url
      */
     public static function getDownloadUrlByDataType(Asset $asset)
     {
-        $path = base64_encode("/assets/" . $asset->uuid . "/" . $asset->version . "." . $asset->extension);
+        $path = "/assets/" . $asset->uuid . "/" . $asset->version;
+
+        $path = base64_encode($path);
 
         $storagePath =  "assets/" . $path . "/downloadHighres";
 

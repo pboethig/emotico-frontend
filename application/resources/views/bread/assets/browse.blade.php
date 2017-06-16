@@ -21,6 +21,14 @@
             <div class="col-md-12">
                 <div class="panel panel-bordered">
                     <div class="panel-body table-responsive">
+                        @if (isset($dataType->server_side) && $dataType->server_side)
+                            <div class="pull-left">
+                                <div role="status" class="show-res" aria-live="polite">Showing {{ $dataTypeContent->firstItem() }} to {{ $dataTypeContent->lastItem() }} of {{ $dataTypeContent->total() }} entries</div>
+                            </div>
+                            <div class="pull-right">
+                                {{ $dataTypeContent->links() }}
+                            </div>
+                        @endif
                         <table id="dataTable" class="row table table-hover">
                             <thead>
                                 <tr>

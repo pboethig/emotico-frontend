@@ -18,7 +18,7 @@ class AssetControllerTest extends FeatureTestAbstract
     {
         parent::setUp();
 
-        $this->asset = Asset::all()->first();
+        $this->asset = Asset::all()->last();
     }
 
     public function testDownloadHighres()

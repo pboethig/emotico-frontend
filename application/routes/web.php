@@ -18,7 +18,8 @@ $namespacePrefix = '\\'.config('voyager.controllers.namespace').'\\';
  */
 Route::get('/admin/assets/downloadHighres', 'AssetController@downloadHighres');
 Route::get('/admin/assets/import', 'AssetController@import');
-
+Route::get('/admin/queue/imagethumbnails/info', 'QueueController@getImageThumbnailQueue');
+Route::get('/admin/queue/{command}/startConsumer', 'QueueController@startConsumer');
 
 /**
  * Voyager routes

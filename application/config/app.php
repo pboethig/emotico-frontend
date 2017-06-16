@@ -236,5 +236,6 @@ return [
     'mediaconverter.public.websocket.url'=>env('MEDIACONVERTER_PUBLIC_WEBSOCKET_URL'),
     'mediaconverter.public.web.url'=>env('MEDIACONVERTER_PUBLIC_WEB_URL'),
     'mediaconverter.public.storage.url'=>env('MEDIACONVERTER_PUBLIC_STORAGE_URL'),
-
+    'mediaconverter.queue.imagine.thumbnails'=>env('MEDIACONVERTER_QUEUE_IMAGINE_THUMBNAILS'),
+    'mediaconverter.queue.imagine.consumercommand'=>env('MEDIACONVERTER_QUEUE_IMAGINE_CONSUMERCOMMAND'),
 ];
