@@ -14,6 +14,14 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
 {
 
     /**
+     * HomeController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

@@ -21,6 +21,9 @@ $namespacePrefix = '\\'.config('voyager.controllers.namespace').'\\';
  * Assets
  */
 Route::get('/admin/assets/downloadHighres', 'AssetController@downloadHighres');
+
+Auth::routes();
+
 Route::get('/admin/assets/import', 'AssetController@import');
 
 /**
@@ -45,7 +48,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/webhooks/thumbnailFinedataCreated', 'WebHookController@thumbnailFinedataCreated');
