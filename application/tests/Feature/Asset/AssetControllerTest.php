@@ -33,4 +33,11 @@ class AssetControllerTest extends FeatureTestAbstract
 
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    public function testGetDropzoneConfig()
+    {
+        $response = $this->actingAs($this->user)->get('/admin/assets/getUploadFormConfig');
+
+        $response->assertStatus(200);
+    }
 }

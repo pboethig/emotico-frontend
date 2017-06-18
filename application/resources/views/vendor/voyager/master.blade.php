@@ -36,8 +36,7 @@
     <script type="text/javascript" src="{{ voyager_asset('lib/js/jquery.min.js') }}"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/assets/editthumbnaillist.blade.css') }}" rel="stylesheet">

@@ -86,8 +86,7 @@ class ImportTest extends DuskTestCase
      */
     public function testOpenImportPageLogin()
     {
-
-        $this->browse(function (Browser $browser)
+       $this->browse(function (Browser $browser)
         {
             $browser->loginAs(User::all()->first())
             ->visit('/admin/assets/import')

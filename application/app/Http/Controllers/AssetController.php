@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\Asset\Thumbnail;
+use App\Helper\Asset\Import\DropzoneConfig;
+use App\Helper\Asset\Import\UploadFormConfig;
 use App\Helper\Asset\Url;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use TCG\Voyager\Facades\Voyager;
 
-
+/**
+ * Class AssetController
+ * @package App\Http\Controllers
+ */
 class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadController
 {
 
@@ -121,4 +125,14 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
     {
         return view('bread.assets.import');
     }
+
+    /**
+     * @param UploadFormConfig $uploadFormConfig
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUploadFormConfig(UploadFormConfig $uploadFormConfig)
+    {
+        return response()->json($uploadFormConfig);
+    }
+    
 }

@@ -5,10 +5,11 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="{{ $dataType->icon }}"></i> {{ $dataType->display_name_plural }}
-        @if (Voyager::can('add_'.$dataType->name))
-            <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success">
-                <i class="voyager-plus"></i> Add New
-            </a>
+        @if (Voyager::can('import_assets'))
+        <a href="{{ url('/admin/assets/import') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-list"></span>&nbsp;
+            {{ __('messages.Import') }}
+        </a>
         @endif
     </h1>
     @include('voyager::multilingual.language-selector')

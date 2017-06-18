@@ -4,8 +4,13 @@
  * @see views/bread/assets/datatable.blade.php
  * @constructor
  */
-function UploadForm()
+function UploadForm(config)
 {
+    /**
+     * Configs uploadform
+     */
+    this.config = config;
+
     /**
      * Constructor
      */
@@ -15,8 +20,6 @@ function UploadForm()
 
         this.pingInDesignserver();
 
-        this.buildDropzone();
-
         this.attachWebsockets();
 
         this.setMessageInfosFromQueue('imagethumbnails');
@@ -25,9 +28,11 @@ function UploadForm()
 
         this.setMessageInfosFromQueue('indesignthumbnails');
 
-        this.startMessageConsumer(imagethumbnailConsumerCommand);
+        this.startMessageConsumer(this.config.imagethumbnailConsumerCommand);
 
-        this.startMessageConsumer(videothumbnailConsumerCommand);
+        this.startMessageConsumer(this.config.videothumbnailConsumerCommand);
+
+        this.buildDropzone();
     };
 
     /**
@@ -67,20 +72,18 @@ function UploadForm()
      */
     this.pingInDesignserver = function()
     {
-        $.get(pingInDesignServerUrl, function( data ) {
+        var that = this;
 
-            var message="";
+        $.get(this.config.pingInDesignServerUrl, function( data ) {
 
             if(data.result==true)
             {
-                message='<div class="alert alert-success"><section>InDesignServer:</section>Successfully connected!</div>';
-            }else
-            {
-                message='<div class="alert alert-danger"><section>InDesignServer:</section>Error: IP '+data.IP+' is not reachable</div>';
+                that.setInDesignServerConnectionSuccess()
             }
-
-            $("#indesign_server").html(message)
-
+            else
+            {
+                that.setInDesignServerConnectionError(data.IP)
+            }
         });
     };
 
@@ -99,16 +102,133 @@ function UploadForm()
     };
 
     /**
+     * Set placeholderrow on adding image in dropzone
+     * @param message
+     */
+    this.setDataTableRow = function (message)
+    {
+        $(document).ready(function()
+        {
+            try
+            {
+                var source = $('#data_table_row').html();
+
+                var template = Handlebars.compile(source)
+
+                var imageUrl = '/images/loading_blue.gif';
+
+                if(message.imageUrl != undefined)
+                {
+                    imageUrl = message.imageUrl;
+                }
+
+                var data = {
+                    "ticketId" : message.ticketId,
+                    "uuid" : message.uuid,
+                    "version" : message.version,
+                    "extension" : message.extension,
+                    "imageUrl" : imageUrl
+                };
+
+                $('#message').append(template(data));
+
+            }
+            catch(Exception)
+            {
+                alert(Exception);
+            }
+        });
+    };
+
+    /**
+     * Set WebsocketConnection created message
+     */
+    this.setWebsocketConnectionCreatedMessage = function ()
+    {
+        var source = $('#websocketconnection').html();
+
+        var template = Handlebars.compile(source);
+
+        $('#websocket').append(template({}));
+    };
+
+    /**
+     * Set Websocket connection error
+     * @param error
+     */
+    this.setWebsocketConnectionError = function (error)
+    {
+        var message = "Disconnected for " + error.reason + " with code " + error.code + " Url:" + this.config.websocketUrl;
+
+        var source = $('#websocketconnectionerror').html();
+
+        var template = Handlebars.compile(source);
+
+        $('#websocket').append(template({"message": message}));
+    };
+
+    /**
+     * Set indesignserver connection error
+     * @param error
+     */
+    this.setInDesignServerConnectionError = function (IP)
+    {
+        var source = $('#indesignserverconnectionerror').html();
+
+        var template = Handlebars.compile(source);
+
+        $('#indesign_server').append(template({"IP": IP}));
+    };
+
+    /**
+     * Set indesignserver connection error
+     * @param error
+     */
+    this.setInDesignServerConnectionSuccess = function ()
+    {
+        var template = Handlebars.compile($('#indesignserverconnectionsuccess').html());
+
+        $('#indesign_server').append(template({}));
+    };
+
+
+    /**
+     * Builds errormessage
+     * @param message
+     * @returns {string}
+     */
+    this.addConverterError = function(message)
+    {
+        $('#'+message.ticketId).attr('src','/images/Not_available_icon.jpg');
+
+        var source = $('#convertererror').html();
+
+        var data = {
+            "ticketId" : message.ticketId,
+            "uuid" : message.uuid,
+            "eventName" : message.eventName,
+            "filename" : message.filename,
+            "error" : message.errors[0]
+        };
+
+        var template = Handlebars.compile(source);
+
+        $('#error_' + message.ticketId).append(template(data));
+    };
+
+    /**
      * Setup dropzone
      */
     this.buildDropzone = function ()
     {
         var scope = this;
 
-        var myDropzone = new Dropzone("#uploadform",
+        $(document).ready(function()
+        {
+            var myDropzone = new Dropzone("#uploadform",
             {
-                url: assetStoreUrl,
-                acceptedFiles: allowedFormats,
+                url: 'http://172.17.0.1:8089/assets/store',
+                acceptedFiles: scope.config.allowedFormats,
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 600, // MB
                 addRemoveLinks: false,
@@ -116,6 +236,7 @@ function UploadForm()
                 parallelUploads: 20,
                 maxFiles: 500,
                 autoProcessQueue: true,
+                dictDefaultMessage: scope.config.dropzoneConfig['initmessage'],
                 previewTemplate: "<div></div>",
                 headers: {
                     'Authorization': 'emotico',
@@ -139,36 +260,6 @@ function UploadForm()
          */
         myDropzone.on("addedfile", function (file)
         {
-            document.querySelector("#total-progress .progress-bar").style.width = 10 + "%";
-        });
-
-        /**
-         * Run backend queue consumer if assetupload is finished
-         */
-        myDropzone.on("complete", function(file)
-        {
-            myDropzone.removeFile(file);
-
-            $.get(triggerProgressUrl + "?file="+file.name+'&time'+Date.now(), function( data ) {
-
-            }).fail(function(data)
-            {
-            });
-
-            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-
-                scope.startMessageConsumer(imagethumbnailConsumerCommand);
-                scope.startMessageConsumer(videothumbnailConsumerCommand);
-            }
-        });
-
-        /**
-         * check if file is already in queue
-         */
-        myDropzone.on("addedfile", function(file)
-        {
-            that = this;
-
             if (this.files.length)
             {
                 var _i, _len;
@@ -178,14 +269,38 @@ function UploadForm()
                     if(this.files[_i].name === file.name && this.files[_i].size === file.size && this.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString())
                     {
                         this.removeFile(file);
-
-                        that.countDownQueue();
                     }
                 }
             }
-        });
-    };
 
+            document.querySelector("#total-progress .progress-bar").style.width = 10 + "%";
+        });
+
+        /**
+         * Run backend queue consumer if assetupload is finished
+         */
+        myDropzone.on("complete", function(file)
+        {
+            if($("#initialRow").length > 0) $("#initialRow").remove();
+
+            myDropzone.removeFile(file);
+
+            $.get(scope.config.triggerProgressUrl + "?file="+file.name+'&time'+Date.now(), function( data ) {
+
+            }).fail(function(data)
+            {
+            });
+
+            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+
+                scope.startMessageConsumer(scope.config.imagethumbnailConsumerCommand);
+                scope.startMessageConsumer(scope.config.videothumbnailConsumerCommand);
+            }
+        });
+
+        });
+
+    };
 
     /**
      * Get thumbnailUrl from websocketMessage
@@ -208,12 +323,13 @@ function UploadForm()
         return thumbnailurl;
     };
 
+
     /**
      * Attach websocket on uploadform
      */
     this.attachWebsockets =function()
     {
-        var webSocket = WS.connect(websocketUrl);
+        var webSocket = WS.connect(this.config.websocketUrl);
 
         var that = this;
 
@@ -222,9 +338,7 @@ function UploadForm()
          */
         webSocket.on("socket/connect", function (session)
         {
-            var message = '<div class="alert alert-success"><section>Websocket:</section>Successfully connected</div>'
-
-            document.getElementById('websocket').innerHTML = message;
+            that.setWebsocketConnectionCreatedMessage();
         });
 
         /**
@@ -232,11 +346,7 @@ function UploadForm()
          */
         webSocket.on("socket/disconnect", function (error)
         {
-            var message = "Disconnected for " + error.reason + " with code " + error.code + " Url:" + websocketUrl ;
-
-            message = '<div class="alert alert-danger"><section>Websocket:</section>'+message+'</div>'
-
-            document.getElementById('websocket').innerHTML = message;
+            that.setWebsocketConnectionError(error);
         });
 
         /**
@@ -253,11 +363,9 @@ function UploadForm()
                 {
                     var message = JSON.parse(payload.msg).message;
 
-                    console.log(message);
-                    
                     if($('#'+message.ticketId).length > 0) return false;
 
-                    $('#message').append('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive drop-shadow" src="/images/loading_blue.gif" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
+                    that.setDataTableRow(message);
 
                     document.querySelector("#total-progress .progress-bar").style.width = 50 + "%";
 
@@ -285,9 +393,8 @@ function UploadForm()
                      */
                     if($('#'+message.ticketId).length == 0)
                     {
-                        $('#message').prepend('<tr id="row_"' + message.ticketId + '><td><img id="' + message.ticketId +'" class="rounded float-left thumbnail img-responsive drop-shadow" src="' + thumbnailurl +'" alt="Loading" title="Loading" width="120" /></td><td><strong>Folder: </strong>' + message.uuid + '</small><br/><div id="error_' + message.ticketId+'"></div></td><td>' + message.version +'</td><td>' + message.extension +'</td></tr>');
-                        $('#row_'+message.ticketId).fadeOut(100);
-
+                        message.imageUrl = thumbnailurl;
+                        that.setDataTableRow(message);
                     }
                     else
                     {
@@ -309,12 +416,9 @@ function UploadForm()
             {
                 try
                 {
-
                     var message = JSON.parse(payload.msg).message;
 
-                    $('#'+message.ticketId).attr('src','http://quantachrome.com/forms06/img/Not_available_icon.jpg');
-
-                    var errorNode = document.createElement('div');
+                    that.addConverterError(message);
                 }
                 catch(ex)
                 {
@@ -324,23 +428,5 @@ function UploadForm()
 
             session.publish("mittax/mediaconverter/topic/converter/error", "No Errors");
         });
-
-        /**
-         * Builds errormessage
-         * @param message
-         * @returns {string}
-         */
-        this.buildErrorMessageMarkup = function(message)
-        {
-            var errorMessageMarkup = '<div class="alert alert-danger">';
-            errorMessageMarkup+='<small><strong>TicketID: </strong> '+ message.ticketId + '</small>';
-            errorMessageMarkup+='<br/><small><strong>EventName: </strong>'+ message.eventName + '</small>';
-            errorMessageMarkup+='<br/><small><strong>Uuid: </strong> '+ message.uuid + '</small>';
-            errorMessageMarkup+='<br/><small><strong>Filename: </strong> ' + message.filename + '</small>';
-            errorMessageMarkup+='<br/><small><strong>ErrorMessage: </strong><br>' + message.errors[0] + '</small>';
-            errorMessageMarkup+='</div>';
-
-            return errorMessageMarkup;
-        };
     }
 }
