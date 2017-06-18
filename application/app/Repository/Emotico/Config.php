@@ -49,11 +49,6 @@ class Config
      * @var string
      */
     public static $indesignthumbnailConsumerCommand;
-
-    /**
-     * @var string
-     */
-    public static $allowedUploadFormats = ".jpeg,.jpg,.png,.gif,.eps,.tiff,.tif,.psd,.indd,.mp4,.mov,.pdf,.divx,.mkv,.wmv,.3gp,.m4v";
     /**
      * Config constructor.
      */

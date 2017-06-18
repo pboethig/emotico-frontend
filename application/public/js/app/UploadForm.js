@@ -22,15 +22,9 @@ function UploadForm(config)
 
         this.attachWebsockets();
 
-        this.setMessageInfosFromQueue('imagethumbnails');
+        this.setMessageInfosFromQueue(['indesignthumbnails', 'videothumbnails','imagethumbnails']);
 
-        this.setMessageInfosFromQueue('videothumbnails');
-
-        this.setMessageInfosFromQueue('indesignthumbnails');
-
-        this.startMessageConsumer(this.config.imagethumbnailConsumerCommand);
-
-        this.startMessageConsumer(this.config.videothumbnailConsumerCommand);
+        this.startMessageConsumer([this.config.videothumbnailConsumerCommand, this.config.imagethumbnailConsumerCommand]);
 
         this.buildDropzone();
     };
@@ -38,15 +32,20 @@ function UploadForm(config)
     /**
      * Calls Emotico api to get left messages in messagequeue
      */
-    this.setMessageInfosFromQueue = function(thumbnailtype)
+    this.setMessageInfosFromQueue = function(arrayOfThumbnailtypes)
     {
         var that = this;
 
-        setInterval(function() {
-            $.get('/admin/queue/' + thumbnailtype + '/info' + '?time'+Date.now(), function( data ) {
-                that.setMessageCount(thumbnailtype, data.messages)
+        setInterval(function()
+        {
+            $.each(arrayOfThumbnailtypes, function (index, thumbnailtype)
+            {
+                $.get('/admin/queue/' + thumbnailtype + '/info' + '?time'+Date.now(), function( data ) {
+                    that.setMessageCount(thumbnailtype, data.messages)
+                });
             });
-        }, 2000);
+
+        }, 5000);
     };
 
     /**
@@ -89,15 +88,13 @@ function UploadForm(config)
 
     /**
      * Start messaageque consumer
+     * @param arrayOfCommands
      */
-    this.startMessageConsumer = function (command)
+    this.startMessageConsumer = function (arrayOfCommands)
     {
-        $.get("/admin/queue/" + command + "/startConsumer?time"+Date.now(), function( data )
+        $.each(arrayOfCommands, function (index, command)
         {
-
-        }).fail(function(data)
-        {
-
+            $.get("/admin/queue/" + command + "/startConsumer?time"+Date.now(), function( data ){});
         });
     };
 
@@ -225,41 +222,16 @@ function UploadForm(config)
 
         $(document).ready(function()
         {
-            var myDropzone = new Dropzone("#uploadform",
-            {
-                url: 'http://172.17.0.1:8089/assets/store',
-                acceptedFiles: scope.config.allowedFormats,
-                paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 600, // MB
-                addRemoveLinks: false,
-                uploadMultiple: true,
-                parallelUploads: 20,
-                maxFiles: 500,
-                autoProcessQueue: true,
-                dictDefaultMessage: scope.config.dropzoneConfig['initmessage'],
-                previewTemplate: "<div></div>",
-                headers: {
-                    'Authorization': 'emotico',
-                    // remove Cache-Control and X-Requested-With
-                    // to be sent along with the request
-                    'Cache-Control': null,
-                    'X-Requested-With': null
-                },
-                queuecomplete: function(errors)
-                {
-                    if(errors)
-                    {
-                        alert("There were errors!");
-                    }
-                }
-            }
-        );
+            var myDropzone = new Dropzone("#uploadform", scope.config.dropzoneConfig);
 
         /**
          * Count up queue
          */
         myDropzone.on("addedfile", function (file)
         {
+            /**
+             * Remove file if already exists
+             */
             if (this.files.length)
             {
                 var _i, _len;
@@ -291,15 +263,12 @@ function UploadForm(config)
             {
             });
 
-            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-
-                scope.startMessageConsumer(scope.config.imagethumbnailConsumerCommand);
-                scope.startMessageConsumer(scope.config.videothumbnailConsumerCommand);
+            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0)
+            {
+                scope.startMessageConsumer([scope.config.videothumbnailConsumerCommand, scope.config.imagethumbnailConsumerCommand]);
             }
         });
-
         });
-
     };
 
     /**
@@ -313,7 +282,7 @@ function UploadForm(config)
 
         if(message.thumbnailList[0] == undefined)
         {
-            thumbnailurl = 'http://quantachrome.com/forms06/img/Not_available_icon.jpg';
+            thumbnailurl = '/images/Not_available_icon.jpg';
         }
         else
         {

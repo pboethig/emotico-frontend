@@ -3,16 +3,17 @@
 <script src="<?php echo e(mix('js/app.js')); ?>"></script>
     <form id="uploadform" class="dropzone"  method="post" enctype="multipart/form-data"></form>
     <hr/>
+        <span class="badge  label-primary imagethumbnails">0</span>
         <label><strong><?php echo e(__('messages.filesinimagequeue')); ?>: </strong></label>
-        <div class="imagethumbnails">0</div>
         <hr class="clear-both"/>
 
+
+        <span class="badge  label-success videothumbnails">0</span>
         <label><strong><?php echo e(__('messages.filesinvideoqueue')); ?>: </strong></label>
-        <div class="videothumbnails">0</div>
         <hr class="clear-both"/>
 
+        <span class="badge indesignthumbnails">0</span>
         <label ><strong><?php echo e(__('messages.filesinindesignqueue')); ?>:</strong></label>
-        <div class="indesignthumbnails">0</div>
 
         <hr class="clear-both"/>
         <span class="fileupload-process">
@@ -64,7 +65,10 @@
     <script src="<?php echo e(mix('js/app/UploadForm.js')); ?>" type="text/javascript"></script>
 
     <script type="text/javascript">
-        var uploadForm = new UploadForm(<?php echo json_encode(new \App\Helper\Asset\Import\UploadFormConfig())?>);
+
+        <?php $uploadFormConfig = new \App\Helper\Asset\Import\UploadFormConfig()?>
+
+        var uploadForm = new UploadForm(<?php echo $uploadFormConfig->toJson()?>);
 
         uploadForm.init();
    </script>

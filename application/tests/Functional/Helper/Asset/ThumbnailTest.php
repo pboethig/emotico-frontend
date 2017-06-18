@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Functional\Helper\Asset;
 
 use App\Company;
 use App\Helper\Asset\Thumbnail;

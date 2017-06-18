@@ -39,11 +39,6 @@ class UploadFormConfig
     /**
      * @var string
      */
-    public $allowedFormats = '';
-
-    /**
-     * @var string
-     */
     public $imagethumbnailConsumerCommand = '';
 
     /**
@@ -57,9 +52,9 @@ class UploadFormConfig
     public $indesignthumbnailConsumerCommand = '';
 
     /**
-     * @var array
+     * @var \App\Helper\Asset\Import\Dropzone\Config
      */
-    public $dropzoneConfig = [];
+    public $dropzoneConfig;
 
     /**
      * DropzoneConfig constructor.
@@ -76,14 +71,31 @@ class UploadFormConfig
 
         $this->websocketUrl = $queueConfig::$websocketUrl;
 
-        $this->allowedFormats = $queueConfig::$allowedUploadFormats;
-
         $this->imagethumbnailConsumerCommand = $queueConfig::$imagethumbnailConsumerCommand;
 
         $this->videothumbnailConsumerCommand = $queueConfig::$videothumbnailConsumerCommand;
 
         $this->indesignthumbnailConsumerCommand = $queueConfig::$indesignthumbnailConsumerCommand;
 
-        $this->dropzoneConfig['initmessage'] = __('messages.dropyourAssetsHere');
+        $this->setDropzoneConfig();
+    }
+
+    private function setDropzoneConfig()
+    {
+        $this->dropzoneConfig = new \App\Helper\Asset\Import\Dropzone\Config();
+    }
+
+    public function toJson()
+    {
+        $stdClass = new \stdClass();
+
+        foreach ($this->dropzoneConfig as $propertyName=>$value)
+        {
+            $stdClass->$propertyName = $value;
+        }
+
+        $this->dropzoneConfig = $stdClass;
+
+        return json_encode($this);
     }
 }

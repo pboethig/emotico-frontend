@@ -247,4 +247,20 @@ return [
     'mediaconverter.queue.imagine.consumercommand'=>env('MEDIACONVERTER_QUEUE_IMAGINE_CONSUMERCOMMAND'),
     'mediaconverter.queue.ffmpeg.consumercommand'=>env('MEDIACONVERTER_QUEUE_FFMPEG_CONSUMERCOMMAND'),
     'mediaconverter.queue.indesign.consumercommand'=>env('MEDIACONVERTER_QUEUE_INDESIGN_CONSUMERCOMMAND'),
+
+    /**
+     * Import Dropzone
+     * @see env for description
+     */
+    'mediaconverter.import.dropzone.paramName'=>env('mediaconverter.import.dropzone.paramName'),
+    'mediaconverter.import.dropzone.maxFilesize'=>env('mediaconverter.import.dropzone.maxFilesize'),
+    'mediaconverter.import.dropzone.addRemoveLinks'=>env('mediaconverter.import.dropzone.addRemoveLinks'),
+    'mediaconverter.import.dropzone.uploadMultiple'=>env('mediaconverter.import.dropzone.uploadMultiple'),
+    'mediaconverter.import.dropzone.parallelUploads'=>env('mediaconverter.import.dropzone.parallelUploads'),
+    'mediaconverter.import.dropzone.maxFiles'=>env('mediaconverter.import.dropzone.maxFiles'),
+    'mediaconverter.import.dropzone.autoProcessQueue'=>env('mediaconverter.import.dropzone.autoProcessQueue'),
+    'mediaconverter.import.dropzone.dictDefaultMessage'=>env('mediaconverter.import.dropzone.dictDefaultMessage'),
+    'mediaconverter.import.dropzone.previewTemplate'=>env('mediaconverter.import.dropzone.previewTemplate'),
+    'mediaconverter.import.dropzone.headers'=>env('mediaconverter.import.dropzone.headers'),
+    'mediaconverter.import.dropzone.acceptedFiles'=>env('mediaconverter.import.dropzone.acceptedFiles'),
 ];
