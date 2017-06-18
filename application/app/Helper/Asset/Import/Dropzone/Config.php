@@ -7,6 +7,8 @@
  */
 
 namespace App\Helper\Asset\Import\Dropzone;
+use App\Repository\Emotico\Client;
+use App\Repository\Emotico\MediaconverterConfig;
 
 /**
  * Class Config
@@ -94,6 +96,13 @@ class Config
         $this->headers = json_decode(config('app')[$scope . 'headers']);
 
         $this->dictDefaultMessage = __(config('app')[$scope . 'dictDefaultMessage']);
+
+        if(empty($this->acceptedFiles))
+        {
+            $mediaconverterConfig = new MediaconverterConfig(new \App\Repository\Emotico\Config());
+
+            $this->acceptedFiles = $mediaconverterConfig->getAllSupportedFormatsAsString();
+        }
 
         $this->url = __(config('app')['mediaconverter.public.web.url'] . '/assets/store');
     }

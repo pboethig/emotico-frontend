@@ -77,14 +77,14 @@ class UploadFormConfig
 
         $this->indesignthumbnailConsumerCommand = $queueConfig::$indesignthumbnailConsumerCommand;
 
-        $this->setDropzoneConfig();
-    }
-
-    private function setDropzoneConfig()
-    {
         $this->dropzoneConfig = new \App\Helper\Asset\Import\Dropzone\Config();
     }
 
+    /**
+     * Normalize object to json
+     *
+     * @return string
+     */
     public function toJson()
     {
         $stdClass = new \stdClass();
