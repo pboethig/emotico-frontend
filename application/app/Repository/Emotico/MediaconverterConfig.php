@@ -14,6 +14,12 @@ namespace App\Repository\Emotico;
  */
 class MediaconverterConfig extends Client
 {
+
+    /**
+     * @var array
+     */
+    public static $formatsGroupedByConverter = [];
+
     /**
      * Returns mediaconverterconfig
      *
@@ -48,6 +54,8 @@ class MediaconverterConfig extends Client
      */
     public function getFormatsGroupedByConverter()
     {
+        if(!empty(self::$formatsGroupedByConverter)) return self::$formatsGroupedByConverter;
+
         $converters = $this->getByKey('converters');
 
         $formats = [];
@@ -58,12 +66,12 @@ class MediaconverterConfig extends Client
             {
                 if($name=='formats')
                 {
-                    $formats[$converterName] = $value;
+                    self::$formatsGroupedByConverter[$converterName] = $value;
                 }
             }
         }
 
-        return $formats;
+        return self::$formatsGroupedByConverter;
     }
 
     /**

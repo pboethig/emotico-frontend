@@ -33,5 +33,10 @@ return [
     'dropyourAssetsHere'=>'Ziehen Sie Ihre Assets hier her.',
     'ReturnToList'=>'Zur&uuml;ck zur Liste',
     'Import'=>'Import',
-    'NoFilesInProgress'=>'Es sind keine Dateien in Bearbeitung'
+    'NoFilesInProgress'=>'Es sind keine Dateien in Bearbeitung',
+    'Download'=>'Herunterladen',
+    'Pagename'=>'Seitenname',
+    'Close'=>'Schliessen',
+    'ShowSupportedFormats'=>'Zeige unterstützte Formate',
+    'supportedFormats'=>'Unterstützte Formate'
 ];

@@ -11,6 +11,9 @@
 @stop
 
 @section('content')
+
+    <!-- available Formats dialog -->
+    @include('bread.assets.dialogs.supported-formats')
     <div class="page-content container-fluid">
         @include('voyager::alerts')
         <div class="row">
@@ -21,6 +24,11 @@
                             <span class="glyphicon glyphicon-list"></span>&nbsp;
                             {{ __('messages.ReturnToList') }}
                         </a>
+                        <a href="javascript:void(0);" class="btn btn-primary openSupportedFormats">
+                            <span class="glyphicon glyphicon-list"></span>&nbsp;
+                            {{ __('messages.ShowSupportedFormats') }}
+                        </a>
+
                     </h3>
                 </div>
                 <div class="clear"></div>

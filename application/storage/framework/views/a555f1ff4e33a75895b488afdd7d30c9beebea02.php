@@ -9,6 +9,9 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+
+    <!-- available Formats dialog -->
+    <?php echo $__env->make('bread.assets.dialogs.supported-formats', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="page-content container-fluid">
         <?php echo $__env->make('voyager::alerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <div class="row">
@@ -21,6 +24,12 @@
                             <?php echo e(__('messages.ReturnToList')); ?>
 
                         </a>
+                        <a href="javascript:void(0);" class="btn btn-primary openSupportedFormats">
+                            <span class="glyphicon glyphicon-list"></span>&nbsp;
+                            <?php echo e(__('messages.ShowSupportedFormats')); ?>
+
+                        </a>
+
                     </h3>
                 </div>
                 <div class="clear"></div>

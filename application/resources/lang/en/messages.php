@@ -33,6 +33,10 @@ return [
     'dropyourAssetsHere'=>'Drop your assets here',
     'ReturnToList'=>'Return to list',
     'Import'=>'Import',
-    'NoFilesInProgress'=>'No files in progress'
-
+    'NoFilesInProgress'=>'No files in progress',
+    'Download'=>'Download',
+    'Pagename'=>'Pagename',
+    'Close'=>'Close',
+    'ShowSupportedFormats'=>'Show supported formats',
+    'supportedFormats'=>'Supported formats'
 ];
