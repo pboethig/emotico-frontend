@@ -39,5 +39,5 @@ return [
     'Close'=>'Close',
     'ShowSupportedFormats'=>'Show supported formats',
     'supportedFormats'=>'Supported formats',
-    'Loading'=>'Loading'
+    'Loading'=>'Loading',
 ];

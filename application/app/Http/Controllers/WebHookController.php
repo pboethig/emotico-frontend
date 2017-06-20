@@ -32,7 +32,7 @@ class WebHookController extends Controller
 
         }catch (\Exception $ex)
         {
-
+            return response($ex->getMessage())->setStatusCode(500);
         }
 
         return ['success'];

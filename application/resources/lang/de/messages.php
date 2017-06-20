@@ -39,5 +39,6 @@ return [
     'Close'=>'Schliessen',
     'ShowSupportedFormats'=>'Zeige unterstützte Formate',
     'supportedFormats'=>'Unterstützte Formate',
-    'Loading'=>'Lade...'
+    'Loading'=>'Lade...',
+    'SuccessfullyConnected' => 'erfolgreich verbunden'
 ];

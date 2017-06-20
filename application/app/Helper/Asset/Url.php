@@ -41,7 +41,7 @@ class Url
      */
     public static function getDownloadUrlByDataType(Asset $asset)
     {
-        $path = "/assets/" . $asset->uuid . "/" . $asset->version;
+        $path = "/assets/" . $asset->uuid . "/" . $asset->version . ".".$asset->extension;
 
         $path = base64_encode($path);
 
