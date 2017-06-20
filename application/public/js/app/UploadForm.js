@@ -104,6 +104,9 @@ function UploadForm(config)
      */
     this.setDataTableRow = function (message)
     {
+
+        console.log(message);
+
         $(document).ready(function()
         {
             try

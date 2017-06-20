@@ -38,5 +38,6 @@ return [
     'Pagename'=>'Pagename',
     'Close'=>'Close',
     'ShowSupportedFormats'=>'Show supported formats',
-    'supportedFormats'=>'Supported formats'
+    'supportedFormats'=>'Supported formats',
+    'Loading'=>'Loading'
 ];

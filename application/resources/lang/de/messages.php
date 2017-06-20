@@ -38,5 +38,6 @@ return [
     'Pagename'=>'Seitenname',
     'Close'=>'Schliessen',
     'ShowSupportedFormats'=>'Zeige unterstützte Formate',
-    'supportedFormats'=>'Unterstützte Formate'
+    'supportedFormats'=>'Unterstützte Formate',
+    'Loading'=>'Lade...'
 ];
