@@ -16,13 +16,13 @@ function UploadForm(config)
      */
     this.init = function()
     {
-        this.initVars();
-
         this.pingInDesignserver();
 
         this.attachWebsockets();
 
-        this.setMessageInfosFromQueue(['indesignthumbnails', 'videothumbnails','imagethumbnails']);
+        this.initVars();
+
+        this.setMessageInfosFromQueue(['indesignthumbnails', 'videothumbnails', 'imagethumbnails']);
 
         this.startMessageConsumer([this.config.videothumbnailConsumerCommand, this.config.imagethumbnailConsumerCommand]);
 
@@ -146,7 +146,7 @@ function UploadForm(config)
 
         var template = Handlebars.compile(source);
 
-        $('#websocket').append(template({}));
+        $('#websocket').html("").append(template({}));
     };
 
     /**
@@ -161,7 +161,7 @@ function UploadForm(config)
 
         var template = Handlebars.compile(source);
 
-        $('#websocket').append(template({"message": message}));
+        $('#websocket').html(template({"message": message}));
     };
 
     /**
@@ -174,7 +174,7 @@ function UploadForm(config)
 
         var template = Handlebars.compile(source);
 
-        $('#indesign_server').append(template({"IP": IP}));
+        $('#indesign_server').html(template({"IP": IP}));
     };
 
     /**
@@ -185,7 +185,7 @@ function UploadForm(config)
     {
         var template = Handlebars.compile($('#indesignserverconnectionsuccess').html());
 
-        $('#indesign_server').append(template({}));
+        $('#indesign_server').html(template({}));
     };
 
 
@@ -224,50 +224,50 @@ function UploadForm(config)
         {
             var myDropzone = new Dropzone("#uploadform", scope.config.dropzoneConfig);
 
-        /**
-         * Count up queue
-         */
-        myDropzone.on("addedfile", function (file)
-        {
             /**
-             * Remove file if already exists
+             * Count up queue
              */
-            if (this.files.length)
+            myDropzone.on("addedfile", function (file)
             {
-                var _i, _len;
-
-                for (_i = 0, _len = this.files.length; _i < _len - 1; _i++) // -1 to exclude current file
+                /**
+                 * Remove file if already exists
+                 */
+                if (this.files.length)
                 {
-                    if(this.files[_i].name === file.name && this.files[_i].size === file.size && this.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString())
+                    var _i, _len;
+
+                    for (_i = 0, _len = this.files.length; _i < _len - 1; _i++) // -1 to exclude current file
                     {
-                        this.removeFile(file);
+                        if(this.files[_i].name === file.name && this.files[_i].size === file.size && this.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString())
+                        {
+                            this.removeFile(file);
+                        }
                     }
                 }
-            }
 
-            document.querySelector("#total-progress .progress-bar").style.width = 10 + "%";
-        });
-
-        /**
-         * Run backend queue consumer if assetupload is finished
-         */
-        myDropzone.on("complete", function(file)
-        {
-            if($("#initialRow").length > 0) $("#initialRow").remove();
-
-            myDropzone.removeFile(file);
-
-            $.get(scope.config.triggerProgressUrl + "?file="+file.name+'&time'+Date.now(), function( data ) {
-
-            }).fail(function(data)
-            {
+                document.querySelector("#total-progress .progress-bar").style.width = 10 + "%";
             });
 
-            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0)
+            /**
+             * Run backend queue consumer if assetupload is finished
+             */
+            myDropzone.on("complete", function(file)
             {
-                scope.startMessageConsumer([scope.config.videothumbnailConsumerCommand, scope.config.imagethumbnailConsumerCommand]);
-            }
-        });
+                if($("#initialRow").length > 0) $("#initialRow").remove();
+
+                myDropzone.removeFile(file);
+
+                $.get(scope.config.triggerProgressUrl + "?file="+file.name+'&time'+Date.now(), function( data ) {
+
+                }).fail(function(data)
+                {
+                });
+
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0)
+                {
+                    scope.startMessageConsumer([scope.config.videothumbnailConsumerCommand, scope.config.imagethumbnailConsumerCommand]);
+                }
+            });
         });
     };
 
@@ -298,16 +298,51 @@ function UploadForm(config)
      */
     this.attachWebsockets =function()
     {
-        var webSocket = WS.connect(this.config.websocketUrl);
+        var scope = this;
 
-        var that = this;
+        var webUrl = this.config.weburl + '/websocket/start?time'+Date.now();
+
+        try
+        {
+            //have to request 2 times after backend restart. Why ever. WTF
+            $.get(webUrl, function( data )
+            {
+                scope.addWebsocketListener(scope);
+            });
+
+
+            $.get(webUrl, function( data )
+            {
+                scope.addWebsocketListener(scope);
+
+            }).fail(function(data)
+            {
+                var error = {};
+
+                error.message = data;
+
+                scope.setWebsocketConnectionError(error);
+            });
+
+        }catch(Exception)
+        {
+          alert(Exception);
+        }
+    };
+
+    /**
+     * adds websocketListener
+     */
+    this.addWebsocketListener = function (scope)
+    {
+        var webSocket = WS.connect(this.config.websocketUrl);
 
         /**
          * Initialize websocket connection
          */
         webSocket.on("socket/connect", function (session)
         {
-            that.setWebsocketConnectionCreatedMessage();
+            scope.setWebsocketConnectionCreatedMessage();
         });
 
         /**
@@ -315,16 +350,7 @@ function UploadForm(config)
          */
         webSocket.on("socket/disconnect", function (error)
         {
-            that.setWebsocketConnectionCreatedMessage(error);
-
-            $.get(that.config.weburl + '/websocket/start?time'+Date.now(), function( data ) {
-                that.setWebsocketConnectionCreatedMessage();
-
-            }).fail(function(data)
-            {
-
-            });
-
+            scope.setWebsocketConnectionError(error);
         });
 
         /**
@@ -343,13 +369,15 @@ function UploadForm(config)
 
                     if($('#'+message.ticketId).length > 0) return false;
 
-                    that.setDataTableRow(message);
+                    scope.setDataTableRow(message);
 
                     document.querySelector("#total-progress .progress-bar").style.width = 50 + "%";
 
                 }catch(Exception)
                 {
+                    var err = new Error();
 
+                    alert("Success websocket listener error: "+ Exception + ' Trace:' + err.stack);
                 }
             });
 
@@ -364,7 +392,7 @@ function UploadForm(config)
 
                     if(message.event =="ffmpeg.lowres.created") return;
 
-                    var thumbnailurl = that.getThumbnailUrl(message);
+                    var thumbnailurl = scope.getThumbnailUrl(message);
 
                     /**
                      * Current browserwindow was closed.
@@ -372,7 +400,7 @@ function UploadForm(config)
                     if($('#'+message.ticketId).length == 0)
                     {
                         message.imageUrl = thumbnailurl;
-                        that.setDataTableRow(message);
+                        scope.setDataTableRow(message);
                     }
                     else
                     {
@@ -383,7 +411,9 @@ function UploadForm(config)
                 }
                 catch(Exception)
                 {
+                    var err = new Error();
 
+                    alert("Success websocket listener error: "+ Exception + ' Trace:' + err.stack);
                 }
             });
 
@@ -396,7 +426,7 @@ function UploadForm(config)
                 {
                     var message = JSON.parse(payload.msg).message;
 
-                    that.addConverterError(message);
+                    scope.addConverterError(message);
                 }
                 catch(ex)
                 {

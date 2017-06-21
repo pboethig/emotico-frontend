@@ -7,6 +7,8 @@
  */
 
 namespace App\Repository\Emotico;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Client
@@ -40,7 +42,18 @@ class Client
      */
     public function get(string $path)
     {
-        $response = $this->client->get(Config::$weburl.$path);
+        $response = null;
+
+        try
+        {
+            $response = $this->client->get(Config::$weburl.$path);
+
+        }catch (\Exception $ex)
+        {
+            $message = "Backendsystem emotico has problems: Message:". $ex->getMessage().$ex->getTraceAsString();
+
+            die($message);
+        }
 
         return $response;
     }

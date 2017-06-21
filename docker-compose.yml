@@ -1,13 +1,11 @@
 version: '2'
-
 services:
-
 ### Applications Code Container #############################
-
     applications:
       image: tianon/true
       volumes:
         - ./application:/var/www
+      restart: always
 
 ### Workspace Utilities Container ###########################
 
@@ -46,6 +44,7 @@ services:
       networks:
         - frontend
         - backend
+      restart: always
 
 ### PHP-FPM Container #######################################
     php-fpm:
@@ -80,6 +79,7 @@ services:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
       networks:
         - backend
+      restart: always
 
 ### Nginx Server Container ##################################
     nginx:
@@ -100,6 +100,7 @@ services:
       networks:
         - frontend
         - backend
+      restart: always
 
 ### Selenium Container ########################################
 
@@ -112,6 +113,7 @@ services:
       networks:
         - frontend
         - backend
+      restart: always
 
 ### MySQL Container #########################################
 
@@ -130,6 +132,7 @@ services:
         - "${MYSQL_PORT}:3306"
       networks:
         - backend
+      restart: always
 ### Networks Setup ############################################
 
 networks:

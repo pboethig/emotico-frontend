@@ -66,9 +66,12 @@
 
     <script type="text/javascript">
 
-        <?php $uploadFormConfig = new \App\Helper\Asset\Import\UploadFormConfig()?>
+        $(document).ready(function()
+        {
+            <?php $uploadFormConfig = new \App\Helper\Asset\Import\UploadFormConfig()?>
 
-        var uploadForm = new UploadForm(<?php echo $uploadFormConfig->toJson()?>);
+            var uploadForm = new UploadForm(<?php echo $uploadFormConfig->toJson()?>);
 
-        uploadForm.init();
+            uploadForm.init();
+        });
    </script>
