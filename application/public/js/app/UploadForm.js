@@ -315,7 +315,16 @@ function UploadForm(config)
          */
         webSocket.on("socket/disconnect", function (error)
         {
-            that.setWebsocketConnectionError(error);
+            that.setWebsocketConnectionCreatedMessage(error);
+
+            $.get(that.config.weburl + '/websocket/start?time'+Date.now(), function( data ) {
+                that.setWebsocketConnectionCreatedMessage();
+
+            }).fail(function(data)
+            {
+
+            });
+
         });
 
         /**

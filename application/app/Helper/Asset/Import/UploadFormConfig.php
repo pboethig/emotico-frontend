@@ -39,6 +39,11 @@ class UploadFormConfig
     /**
      * @var string
      */
+    public $weburl = '';
+
+    /**
+     * @var string
+     */
     public $imagethumbnailConsumerCommand = '';
 
     /**
@@ -68,6 +73,8 @@ class UploadFormConfig
         $this->triggerProgressUrl = $queueConfig::$weburl . "/assets/process";
 
         $this->pingInDesignServerUrl = $queueConfig::$weburl . "/indesignserver/ping";
+
+        $this->weburl = $queueConfig::$weburl;
 
         $this->websocketUrl = $queueConfig::$websocketUrl;
 

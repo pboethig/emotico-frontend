@@ -41,6 +41,7 @@ class ConfigTest extends TestCase
         $this->assertNotEmpty($dropzoneconfig->acceptedFiles);
         $this->assertNotEmpty($dropzoneconfig->url);
 
+
         $uploadFormConfig = new UploadFormConfig();
 
         $this->assertNotEmpty($uploadFormConfig->dropzoneConfig);
