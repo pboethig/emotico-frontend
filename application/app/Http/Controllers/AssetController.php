@@ -126,6 +126,27 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         return view('bread.assets.import');
     }
 
+    public function edit(Request $request, $id)
+    {
+        $slug = $this->getSlug($request);
+
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+
+        // Check permission
+        Voyager::canOrFail('edit_'.$dataType->name);
+
+        $relationships = $this->getRelationships($dataType);
+
+        $dataTypeContent = (strlen($dataType->model_name) != 0)
+            ? app($dataType->model_name)->with($relationships)->findOrFail($id)
+            : DB::table($dataType->name)->where('id', $id)->first(); // If Model doest exist, get data from table name
+
+        // Check if BREAD is Translatable
+        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+
+        return view('bread.assets.edit', compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
+    }
+
     /**
      * @param UploadFormConfig $uploadFormConfig
      * @return \Illuminate\Http\JsonResponse
