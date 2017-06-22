@@ -1,6 +1,5 @@
 <?php
 
-die(__FILE__);
 return [
 
     /*

@@ -25,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        die(__METHOD__);
+
         return view('home');
     }
 }

@@ -128,7 +128,6 @@ function UploadForm(config)
                 };
 
                 $('#message').append(template(data));
-
             }
             catch(Exception)
             {

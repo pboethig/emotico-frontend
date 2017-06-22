@@ -2,9 +2,7 @@
 
 namespace Tests\Functional\Helper\Asset;
 
-use App\Company;
 use App\Helper\Asset\Thumbnail;
-use App\Stock;
 use Tests\TestCase;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;

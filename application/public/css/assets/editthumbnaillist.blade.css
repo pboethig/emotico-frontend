@@ -15,3 +15,10 @@
     margin:0;
     padding:0;
 }
+
+.editthumbnaillist .videoTag
+{
+    display:block !important;
+    margin: 0 !important;
+    padding:0 !important;
+}

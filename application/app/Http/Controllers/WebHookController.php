@@ -3,39 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
+use GuzzleHttp\Psr7\Response;
 use Symfony\Component\HttpFoundation\Request;
 use TCG\Voyager\Http\Controllers\Controller;
 
+/**
+ * Class WebHookController
+ * @package App\Http\Controllers
+ */
 class WebHookController extends Controller
 {
     /**
      * @param Request $request
      * @return array
      */
-    public function thumbnailFinedataCreated(Request $request)
+    public function thumbnailFinedataCreated(Request $request, \App\Repository\Asset $assetRepository)
     {
-        $data = json_decode($request->getContent(), true);
-
-        $assetData = [
-            'uuid'=>$data['message']['uuid'],
-            'version'=>$data['message']['version'],
-            'extension'=>$data['message']['extension'],
-            'type'=>'image',
-            'thumbnailList'=>json_encode($data['message']['thumbnailList'])
-        ];
-
-        $asset = new  Asset($assetData);
-
         try
         {
-            $asset->save();
+            $data = json_decode($request->getContent(), true);
+
+            $assetData = [
+                'uuid' => $data['message']['uuid'],
+                'version' => $data['message']['version'],
+                'extension' => $data['message']['extension'],
+                'type' => 'image',
+                'thumbnailList' => json_encode($data['message']['thumbnailList'])
+            ];
+
+            $asset = new Asset($assetData);
+
+            $asset = $assetRepository->save($asset);
 
         }catch (\Exception $ex)
         {
-            return response($ex->getMessage())->setStatusCode(500);
+            return new \Illuminate\Http\Response($ex->getMessage().$ex->getTraceAsString(),500);
         }
 
-        return ['success'];
+        return ['success'=>['id'=>$asset->id]];
     }
-    
 }

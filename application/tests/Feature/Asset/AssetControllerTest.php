@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Asset;
 
-use App\Helper\Asset\Url;
-use App\Models\Asset;
 use Tests\Feature\FeatureTestAbstract;
 
 /**
@@ -12,26 +10,9 @@ use Tests\Feature\FeatureTestAbstract;
  */
 class AssetControllerTest extends FeatureTestAbstract
 {
-    private $asset;
-
     public function setUp()
     {
         parent::setUp();
-
-        $this->asset = Asset::all()->last();
-    }
-
-    public function testDownloadHighres()
-    {
-        $asset = Asset::all()->first();
-
-        $url = Url::getDownloadUrlByDataType($asset);
-
-        $client = new \GuzzleHttp\Client();
-
-        $response = $client->get($url);
-
-        $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testGetDropzoneConfig()

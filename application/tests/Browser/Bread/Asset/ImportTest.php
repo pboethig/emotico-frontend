@@ -2,6 +2,9 @@
 
 namespace Tests\Browser\Bread\Asset;
 
+use App\Helper\Asset\Import\Upload;
+use App\Helper\Asset\Url;
+use App\Models\Asset;
 use App\Models\User;
 use App\Repository\Emotico\Config;
 use Tests\DuskTestCase;
@@ -16,58 +19,52 @@ class ImportTest extends DuskTestCase
 
     public function testUpload()
     {
-        $guzzle = new \GuzzleHttp\Client();
-
-        $config = new Config();
-
-        $fileName=['test.jpg','test2.jpg','test3.jpg','test4.jpg','test.mkv'];
-
-        /**
-         * Upload File
-         */
-        $res = $guzzle->request('POST', $config::$weburl.'/assets/store', [
-            'multipart' => [
+        $files =
+            [
                 [
                     'name'     => 'file[]',
                     'contents' => file_get_contents("/var/www/public/images/audi.png"),
-                    'filename' => $fileName[0]
+                    'filename' => 'testFile1.jpg'
                 ],
                 [
                     'name'     => 'file[]',
                     'contents' => file_get_contents("/var/www/public/images/images.png"),
-                    'filename' => $fileName[1]
+                    'filename' => 'testFile2.jpg'
                 ],
                 [
                     'name'     => 'file[]',
                     'contents' => file_get_contents("/var/www/public/images/shanghai_logo.png"),
-                    'filename' => $fileName[2]
+                    'filename' => 'testFile3.jpg'
                 ],
                 [
                     'name'     => 'file[]',
                     'contents' => file_get_contents("/var/www/public/images/logo.png"),
-                    'filename' => $fileName[3]
+                    'filename' => 'testFile4.jpg'
                 ],
                 [
                     'name'     => 'file[]',
                     'contents' => file_get_contents("/var/www/public/images/test.mkv"),
-                    'filename' => $fileName[4]
+                    'filename' => 'testFile5.mkv'
                 ]
-            ],
-        ]);
+            ];
+
+        $upload = new Upload();
+
+        $res = $upload->upload($files);
 
         $this->assertEquals(200, $res->getStatusCode());
+
 
         /**
          * Trigger process
          */
-        $res = $guzzle->get($config::$weburl . '/assets/process?file=' . $fileName[0]);
+        $guzzle = new \GuzzleHttp\Client();
 
-        $this->assertEquals(200, $res->getStatusCode());
+        $config = new Config();
 
-        foreach ($fileName as $file)
+        foreach ($files as $file)
         {
-            $res = $guzzle->get($config::$weburl . '/assets/process?file=' . $file);
-
+            $res = $guzzle->get($config::$weburl . '/assets/process?file='. $file['filename']);
             $this->assertEquals(200, $res->getStatusCode());
         }
 
@@ -75,6 +72,14 @@ class ImportTest extends DuskTestCase
          * Run consumer
          */
         $res = $guzzle->get($config::$weburl . '/queue/mittax:mediaconverter:thumbnail:imagine:startconsumer/startConsumer');
+
+        $this->assertEquals($res->getStatusCode(), 200);
+
+        $this->asset = Asset::where('version','testFile1')->get()->first();
+
+        $url = Url::getDownloadUrlByDataType($this->asset);
+
+        $res = $guzzle->get($url);
 
         $this->assertEquals(200, $res->getStatusCode());
     }
@@ -91,11 +96,11 @@ class ImportTest extends DuskTestCase
             $browser->loginAs(User::all()->first())
             ->visit('/admin/assets/import')
             ->waitFor('.admin-section-title')
-            ->assertSee('Media Import')
-            ->assertSee('Drop files')
-            ->assertSee('Files in ImageQueue')
-            ->assertSee('Files in VideoQueue')
-            ->assertSee('Files in InDesignQueue')
+            ->assertSee('Asset Import')
+            ->assertSee('Drop your')
+            ->assertSee('Files in image')
+            ->assertSee('Files in video')
+            ->assertSee('Files in indesign')
             ->assertSee('Connection')
             ->assertSee('Successfully connected')
             ->waitFor('#indesign_server')
