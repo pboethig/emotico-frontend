@@ -10,7 +10,7 @@ use Tests\Feature\FeatureTestAbstract;
  * Class BreadTest
  * @package Tests\Feature\Asset
  */
-class QueueTest extends FeatureTestAbstract
+class MediaconverterConfigTest extends FeatureTestAbstract
 {
     public function setUp()
     {

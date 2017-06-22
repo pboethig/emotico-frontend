@@ -77,4 +77,21 @@ class QueueTest extends FeatureTestAbstract
 
         $response->assertStatus(200);
     }
+
+    public function testQueueConfig()
+    {
+        $config=new Config();
+
+        $this->assertNotEmpty($config::$imagethumbnailConsumerCommand);
+        $this->assertNotEmpty($config::$imageThumbnailQueue);
+        $this->assertNotEmpty($config::$indesignthumbnailConsumerCommand);
+        $this->assertNotEmpty($config::$indesignThumbnailQueue);
+        $this->assertNotEmpty($config::$videoLowresConsumerCommand);
+        $this->assertNotEmpty($config::$videoLowresQueue);
+        $this->assertNotEmpty($config::$videothumbnailConsumerCommand);
+        $this->assertNotEmpty($config::$websocketUrl);
+        $this->assertNotEmpty($config::$weburl);
+
+    }
+
 }

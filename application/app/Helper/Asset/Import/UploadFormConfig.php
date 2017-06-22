@@ -57,6 +57,10 @@ class UploadFormConfig
     public $indesignthumbnailConsumerCommand = '';
 
     /**
+     * @var string
+     */
+    public $videoLowresConsumerCommand = '';
+    /**
      * @var \App\Helper\Asset\Import\Dropzone\Config
      */
     public $dropzoneConfig;
@@ -83,6 +87,8 @@ class UploadFormConfig
         $this->videothumbnailConsumerCommand = $queueConfig::$videothumbnailConsumerCommand;
 
         $this->indesignthumbnailConsumerCommand = $queueConfig::$indesignthumbnailConsumerCommand;
+
+        $this->videoLowresConsumerCommand = $queueConfig::$videoLowresConsumerCommand;
 
         $this->dropzoneConfig = new \App\Helper\Asset\Import\Dropzone\Config();
     }

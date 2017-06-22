@@ -24,7 +24,7 @@ function UploadForm(config)
 
         this.setMessageInfosFromQueue(['indesignthumbnails', 'videothumbnails', 'imagethumbnails']);
 
-        this.startMessageConsumer([this.config.videothumbnailConsumerCommand, this.config.imagethumbnailConsumerCommand]);
+        this.startMessageConsumer([this.config.videothumbnailConsumerCommand,this.config.videoLowresConsumerCommand, this.config.imagethumbnailConsumerCommand]);
 
         this.buildDropzone();
     };
@@ -196,6 +196,7 @@ function UploadForm(config)
      */
     this.addConverterError = function(message)
     {
+
         $('#'+message.ticketId).attr('src','/images/Not_available_icon.jpg');
 
         var source = $('#convertererror').html();
@@ -265,7 +266,7 @@ function UploadForm(config)
 
                 if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0)
                 {
-                    scope.startMessageConsumer([scope.config.videothumbnailConsumerCommand, scope.config.imagethumbnailConsumerCommand]);
+                    scope.startMessageConsumer([scope.config.videothumbnailConsumerCommand,scope.config.videoLowresConsumerCommand, scope.config.imagethumbnailConsumerCommand]);
                 }
             });
         });
@@ -277,6 +278,8 @@ function UploadForm(config)
      * @returns {string}
      */
     this.getThumbnailUrl = function (message) {
+
+        console.log(message);
 
         var thumbnailurl="";
 

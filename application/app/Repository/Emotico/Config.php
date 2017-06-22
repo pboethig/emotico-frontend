@@ -38,12 +38,22 @@ class Config
     /**
      * @var string
      */
+    public static $videoLowresQueue;
+
+    /**
+     * @var string
+     */
     public static $imagethumbnailConsumerCommand;
 
     /**
      * @var string
      */
     public static $videothumbnailConsumerCommand;
+
+    /**
+     * @var string
+     */
+    public static $videoLowresConsumerCommand;
 
     /**
      * @var string
@@ -65,6 +75,8 @@ class Config
 
         self::$videoThumbnailQueue = config('app')['mediaconverter.queue.ffmpeg.thumbnails'];
 
+        self::$videoLowresQueue = config('app')['mediaconverter.queue.ffmpeg.lowres'];
+
         self::$indesignThumbnailQueue = config('app')['mediaconverter.queue.indesign.thumbnails'];
 
         /**
@@ -73,6 +85,8 @@ class Config
         self::$imagethumbnailConsumerCommand = config('app')['mediaconverter.queue.imagine.consumercommand'];
 
         self::$videothumbnailConsumerCommand = config('app')['mediaconverter.queue.ffmpeg.consumercommand'];
+
+        self::$videoLowresConsumerCommand = config('app')['mediaconverter.queue.ffmpeg.lowres.consumercommand'];
 
         self::$indesignthumbnailConsumerCommand = config('app')['mediaconverter.queue.indesign.consumercommand'];
     }

@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Emotico Client'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'de',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'de',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -241,11 +241,13 @@ return [
     //queues
     'mediaconverter.queue.imagine.thumbnails'=>env('MEDIACONVERTER_QUEUE_IMAGINE_THUMBNAILS'),
     'mediaconverter.queue.ffmpeg.thumbnails'=>env('MEDIACONVERTER_QUEUE_FFMPEG_THUMBNAILS'),
+    'mediaconverter.queue.ffmpeg.lowres'=>env('MEDIACONVERTER_QUEUE_FFMPEG_LOWRES'),
     'mediaconverter.queue.indesign.thumbnails'=>env('MEDIACONVERTER_QUEUE_INDESIGN_THUMBNAILS'),
 
     //consumercomands
     'mediaconverter.queue.imagine.consumercommand'=>env('MEDIACONVERTER_QUEUE_IMAGINE_CONSUMERCOMMAND'),
     'mediaconverter.queue.ffmpeg.consumercommand'=>env('MEDIACONVERTER_QUEUE_FFMPEG_CONSUMERCOMMAND'),
+    'mediaconverter.queue.ffmpeg.lowres.consumercommand'=>env('MEDIACONVERTER_QUEUE_FFMPEG_LOWRES_CONSUMERCOMMAND'),
     'mediaconverter.queue.indesign.consumercommand'=>env('MEDIACONVERTER_QUEUE_INDESIGN_CONSUMERCOMMAND'),
 
     /**

@@ -46,4 +46,6 @@ class ConfigTest extends TestCase
 
         $this->assertNotEmpty($uploadFormConfig->dropzoneConfig);
     }
+
+
 }
