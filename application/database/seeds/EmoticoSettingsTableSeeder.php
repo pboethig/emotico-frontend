@@ -32,7 +32,7 @@ class EmoticoSettingsTableSeeder extends Seeder
         $setting = $this->findSetting('logo');
             $setting->fill([
                 'display_name' => 'Site Logo',
-                'value'        => '',
+                'value'        => 'settings/June2017/SW03jxrIfYhNiAtL9wNp.png',
                 'details'      => '',
                 'type'         => 'image',
                 'order'        => 3,
@@ -68,7 +68,7 @@ class EmoticoSettingsTableSeeder extends Seeder
         $setting = $this->findSetting('admin_loader');
             $setting->fill([
                 'display_name' => 'Admin Loader',
-                'value'        => '',
+                'value'        => 'settings/June2017/G5w2Sw3ThKC6zf8weebc.gif',
                 'details'      => '',
                 'type'         => 'image',
                 'order'        => 6,
@@ -77,7 +77,7 @@ class EmoticoSettingsTableSeeder extends Seeder
         $setting = $this->findSetting('admin_icon_image');
             $setting->fill([
                 'display_name' => 'Admin Icon Image',
-                'value'        => '',
+                'value'        => 'settings/June2017/ejQzCcb6UD6viDLzBxGu.png',
                 'details'      => '',
                 'type'         => 'image',
                 'order'        => 7,
