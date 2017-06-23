@@ -20,4 +20,12 @@ hr
 {
     margin: 4px 0 4px 0;
 }
+.faded-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(50, 50, 50, 0.3);
+}
 
