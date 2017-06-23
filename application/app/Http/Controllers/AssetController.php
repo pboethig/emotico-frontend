@@ -31,6 +31,7 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
      */
     public function index(Request $request)
     {
+
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
@@ -41,6 +42,8 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         Voyager::canOrFail('browse_'.$dataType->name);
 
         $getter = $dataType->server_side ? 'paginate' : 'get';
+
+
 
         // Next Get or Paginate the actual content from the MODEL that corresponds to the slug DataType
         if (strlen($dataType->model_name) != 0) {

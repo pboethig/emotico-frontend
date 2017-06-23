@@ -19,16 +19,15 @@
                             <span class="glyphicon glyphicon-list"></span>&nbsp;
                             {{ __('messages.ShowSupportedFormats') }}
                         </a>
-
                     </h3>
                 </div>
                 <div class="clear"></div>
-                <div id="filemanager">
+                <div id="filemanager" style="background-color: white">
                     <div id="content">
                         <div class="flex panel-bordered">
                             <div id="left">
                                 <div style="margin: 5px">
-                                    @include('cropper.buttons')
+                                    @include('cropper.main')
                                 </div>
                             </div>
                         </div>

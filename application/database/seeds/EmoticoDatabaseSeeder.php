@@ -20,5 +20,6 @@ class EmoticoDatabaseSeeder extends Seeder
         $this->seed('EmoticoDataRowsTableSeeder');
         $this->seed('EmoticoPermissionsTableSeeder');
         $this->seed('EmoticoMenuItemsTableSeeder');
+        $this->seed('EmoticoDataRowsTableSeederAssetCroppings');
     }
 }

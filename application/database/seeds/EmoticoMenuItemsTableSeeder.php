@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Models\MenuItem;
 
+/**
+ * Class EmoticoMenuItemsTableSeeder
+ */
 class EmoticoMenuItemsTableSeeder extends Seeder
 {
     /**
@@ -67,6 +70,23 @@ class EmoticoMenuItemsTableSeeder extends Seeder
                     'color'      => null,
                     'parent_id'  => $assetsMenuItem->id,
                     'order'      => 13,
+                ])->save();
+            }
+
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id'    => $menu->id,
+                'title'      => 'Croppings',
+                'url'        => 'admin/assets/croppings',
+            ]);
+
+            if (!$menuItem->exists)
+            {
+                $menuItem->fill([
+                    'target'     => '_self',
+                    'icon_class' => '',
+                    'color'      => null,
+                    'parent_id'  => $assetsMenuItem->id,
+                    'order'      => 14,
                 ])->save();
             }
         }

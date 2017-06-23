@@ -40,5 +40,16 @@ return [
     'ShowSupportedFormats'=>'Zeige unterstützte Formate',
     'supportedFormats'=>'Unterstützte Formate',
     'Loading'=>'Lade...',
-    'SuccessfullyConnected' => 'erfolgreich verbunden'
+    'PredefinedFormats' => 'vordefinierte Formate',
+    'Data'=>'Daten',
+    'assetEdit'=>'Asset bearbeiten',
+    'Zoom'=>'Zoom',
+    'GetCroppedCanvas'=>'Ausschnitt speichern',
+    'StoredCroppings'=>'Gespeicherte Ausschnitte',
+    'Width'=>'Breite',
+    'Height'=>'Höhe',
+    'ScaleX'=>'X-Skallierung',
+    'ScaleY'=>'Y-Skallierung',
+    'Rotate'=>'Drehung',
+    'Toolbar' => 'Werkzeugleiste'
 ];

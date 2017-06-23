@@ -12,6 +12,8 @@ class EmoticoPermissionsTableSeeder extends Seeder
     {
         $keys = [
             'browse_assets',
+            'crop_assets',
+            'import_assets'
         ];
 
         foreach ($keys as $key) {

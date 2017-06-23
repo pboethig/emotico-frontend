@@ -40,4 +40,16 @@ return [
     'ShowSupportedFormats'=>'Show supported formats',
     'supportedFormats'=>'Supported formats',
     'Loading'=>'Loading',
+    'PredefinedFormats' => 'Predefined formats',
+    'Data'=>'Data',
+    'assetEdit'=>'edit asset',
+    'Zoom'=>'Zoom',
+    'GetCroppedCanvas'=>'Get cropped Canvas',
+    'StoredCroppings'=>'Stored Croppings',
+    'Width'=>'Width',
+    'Height'=>'Height',
+    'ScaleX'=>'Scale-X',
+    'ScaleY'=>'Scale-Y',
+    'Rotate'=>'Rotate',
+    'Toolbar' => 'Toolbar'
 ];
