@@ -59,6 +59,12 @@ class Config
      * @var string
      */
     public static $indesignthumbnailConsumerCommand;
+
+    /**
+     * @var string
+     */
+    public static $base64ImageUploadUrl;
+
     /**
      * Config constructor.
      */
@@ -89,5 +95,7 @@ class Config
         self::$videoLowresConsumerCommand = config('app')['mediaconverter.queue.ffmpeg.lowres.consumercommand'];
 
         self::$indesignthumbnailConsumerCommand = config('app')['mediaconverter.queue.indesign.consumercommand'];
+
+        self::$base64ImageUploadUrl = self::$weburl.'/'.config('app')['mediaconverter.asset.base64imageuploadurl'];
     }
 }

@@ -4,8 +4,6 @@
     <link rel="stylesheet" href="{{ voyager_asset('css/media/media.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ voyager_asset('js/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ voyager_asset('css/media/dropzone.css') }}"/>
-    <script src="{{ asset('js/goswebsocket/js/vendor/autobahn.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/goswebsocket/js/gos_web_socket_client.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/dropzone/dropzone-amd-module-4.3.0.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/dropzone/dropzone-4.3.0.js') }}" type="text/javascript"></script>
 @stop
@@ -37,7 +35,7 @@
                         <div class="flex panel-bordered">
                             <div id="left">
                                 <div style="margin: 5px">
-                                    @include('bread.assets.datatable')
+                                    @include('bread.assets.import.uploadform')
                                 </div>
                             </div>
                         </div>

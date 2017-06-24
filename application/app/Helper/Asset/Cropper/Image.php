@@ -28,7 +28,7 @@ class Image
 
         $base64 = base64_encode($imageContent);
 
-        if(empty($extension)) $extension ='jpg';
+        if(empty($extension)) $extension='jpg';
 
         $image='data:image/'.$extension.';base64,' . $base64;
 

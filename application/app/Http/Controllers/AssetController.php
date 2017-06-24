@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Asset\Cropper\Image;
 use App\Helper\Asset\Import\DropzoneConfig;
 use App\Helper\Asset\Import\UploadFormConfig;
 use App\Helper\Asset\Url;
 
+use App\Repository\Emotico\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Facades\Voyager;
@@ -42,8 +44,6 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
         Voyager::canOrFail('browse_'.$dataType->name);
 
         $getter = $dataType->server_side ? 'paginate' : 'get';
-
-
 
         // Next Get or Paginate the actual content from the MODEL that corresponds to the slug DataType
         if (strlen($dataType->model_name) != 0) {
@@ -126,28 +126,37 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
      */
     public function import()
     {
-        return view('bread.assets.import');
+        $uploadFormConfig = (new UploadFormConfig())->toJson();
+
+        return view('bread.assets.import', compact('uploadFormConfig'));
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Request $request, $id)
     {
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
-        // Check permission
         Voyager::canOrFail('edit_'.$dataType->name);
 
         $relationships = $this->getRelationships($dataType);
 
         $dataTypeContent = (strlen($dataType->model_name) != 0)
             ? app($dataType->model_name)->with($relationships)->findOrFail($id)
-            : DB::table($dataType->name)->where('id', $id)->first(); // If Model doest exist, get data from table name
+            : DB::table($dataType->name)->where('id', $id)->first();
 
-        // Check if BREAD is Translatable
-        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+        $emoticoConfig = (new Config());
 
-        return view('bread.assets.edit', compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
+        $base64Image = Image::getBase64Image($dataTypeContent,'png');
+
+        $uploadFormConfig = (new UploadFormConfig())->toJson();
+
+        return view('bread.assets.edit', compact('dataType', 'dataTypeContent', 'emoticoConfig', 'base64Image', 'uploadFormConfig'));
     }
 
     /**
@@ -158,5 +167,4 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
     {
         return response()->json($uploadFormConfig);
     }
-    
 }
