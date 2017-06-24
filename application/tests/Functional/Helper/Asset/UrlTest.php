@@ -51,4 +51,22 @@ class UrlTest extends TestCase
 
         $this->assertNotEmpty($url);
     }
+
+    public function testGetStoragePath()
+    {
+        $asset= new Asset(['uuid'=>'auuid','version'=>'aversion','extension'=>'jpg']);
+
+        $path = Url::getStoragePath($asset);
+
+        $this->assertEquals('assets/auuid/aversion.jpg', $path);
+    }
+
+    public function testGetHighresUrl()
+    {
+        $asset= new Asset(['uuid'=>'auuid','version'=>'aversion','extension'=>'jpg']);
+
+        $url = Url::getHighresUrl($asset);
+
+        $this->assertNotEmpty($url);
+    }
 }

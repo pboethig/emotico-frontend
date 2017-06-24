@@ -140,11 +140,11 @@ $(function () {
                 case 'getCroppedCanvas':
                     if (result) {
 
-                        // Bootstrap's Modal
-                        $('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
-
-                        if (!$download.hasClass('disabled')) {
-                            $download.attr('href', result.toDataURL('image/jpeg'));
+                        if (!$download.hasClass('disabled'))
+                        {
+                            $.post("/assets/uploadCropping", {filename: $download.attr('download'), base64Image: result.toDataURL('image/png')}, function(result){
+                                alert(result);
+                            });
                         }
                     }
 
@@ -202,38 +202,4 @@ $(function () {
         }
 
     });
-
-
-    // Import image
-    var $inputImage = $('#inputImage');
-
-    if (URL) {
-        $inputImage.change(function () {
-            var files = this.files;
-            var file;
-
-            if (!$image.data('cropper')) {
-                return;
-            }
-
-            if (files && files.length) {
-                file = files[0];
-
-                if (/^image\/\w+$/.test(file.type)) {
-                    if (uploadedImageURL) {
-                        URL.revokeObjectURL(uploadedImageURL);
-                    }
-
-                    uploadedImageURL = URL.createObjectURL(file);
-                    $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
-                    $inputImage.val('');
-                } else {
-                    window.alert('Please choose an image file.');
-                }
-            }
-        });
-    } else {
-        $inputImage.prop('disabled', true).parent().addClass('disabled');
-    }
-
 });

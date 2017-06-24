@@ -11,7 +11,7 @@
             <div class="modal-body"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('messages.Close') }}</button>
-                <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.jpg">{{ __('messages.Download') }}</a>
+                <a class="btn btn-primary" id="download" href="javascript:void(0);" download="{{ $dataTypeContent->version }}.png">{{ __('messages.Download') }}</a>
             </div>
         </div>
     </div>

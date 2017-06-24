@@ -19,7 +19,7 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/admin/login')
             ->pause(500)
-            ->type('email', 'admin@eqs.de')
+            ->type('email', 'admin@emotico')
             ->type('password', 'admin')
             ->press('Login')
             ->waitFor('.active')

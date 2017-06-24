@@ -3,10 +3,9 @@
 namespace App\Helper\Asset;
 use App\Models\Asset;
 
-
 /**
- * Class Stock
- * @package App
+ * Class Url
+ * @package App\Helper\Asset
  */
 class Url
 {
@@ -25,6 +24,8 @@ class Url
     }
 
     /**
+     * Returns highresurl by thumbnail
+     *
      * @param string $url
      * @return string
      */
@@ -39,16 +40,31 @@ class Url
      * @param Asset $asset
      * @return string
      */
+    public static function getHighresUrl(Asset $asset, string $extension ='')
+    {
+        $path = base64_encode(self::getStoragePath($asset, $extension));
+
+        return config('app')['mediaconverter.public.web.url'] . '/assets/' . $path . '/downloadHighres';
+    }
+
+    /**
+     * @param Asset $asset
+     * @param string $extension
+     * @return string
+     */
+    public static function getStoragePath(Asset $asset, string $extension ='')
+    {
+        if(empty($extension)) $extension = $asset->extension;
+
+        return 'assets/' . $asset->uuid . '/' . $asset->version . '.' . $extension;
+    }
+
+    /**
+     * @param Asset $asset
+     * @return string
+     */
     public static function getDownloadUrlByDataType(Asset $asset)
     {
-        $path = "/assets/" . $asset->uuid . "/" . $asset->version . ".".$asset->extension;
-
-        $path = base64_encode($path);
-
-        $storagePath =  "assets/" . $path . "/downloadHighres";
-
-        $storagePath = config('app')['mediaconverter.public.web.url'] . "/" .$storagePath;
-
-        return $storagePath;
+        return self::getHighresUrl($asset);
     }
 }
