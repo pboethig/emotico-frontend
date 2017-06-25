@@ -42,7 +42,7 @@ return [
     'Loading'=>'Loading',
     'PredefinedFormats' => 'Predefined formats',
     'Data'=>'Data',
-    'assetEdit'=>'edit asset',
+    'assetEdit'=>'Edit asset',
     'Zoom'=>'Zoom',
     'GetCroppedCanvas'=>'Get cropped Canvas',
     'StoredCroppings'=>'Stored Croppings',

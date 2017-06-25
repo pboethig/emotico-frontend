@@ -220,7 +220,7 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
                 'cropping_asset_id' => $croppingAsset->id,
                 'user_id' => $user->id,
                 'canvasdata'=> $canvasData,
-                'cropping_hash'=> md5($canvasData.$user->id.$croppingAsset->id.$assetUuid)
+                'cropping_hash'=> md5($user->id.$croppingAsset->id.$asset->id)
             ];
 
             $assetCropping = new AssetsCroppings($croppingData);

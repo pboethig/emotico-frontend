@@ -1,4 +1,4 @@
-<!-- include websockets to get generetaed croppings -->
+<!-- include websockets to get genereted croppings -->
     <script src="{{ asset('js/goswebsocket/js/vendor/autobahn.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/goswebsocket/js/gos_web_socket_client.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app/Websockets/Converter.js') }}" type="text/javascript"></script>
@@ -28,31 +28,17 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
-</script>
-<script type="text/javascript">
 
+    /**
+     * Initialize WebsocketListener for imageconverter
+     * @type {Converter}
+     */
     $(document).ready(function()
     {
-        /**
-         * Initialize WebsocketListener for imageconverter
-         * @type {Converter}
-         */
         var converter = new Converter(<?=$uploadFormConfig?>);
         converter.init(false);
     });
-</script>
 
-<!-- add cropper.js -->
-<script type="text/javascript">
-    var base64ImageUploadUrl = '/admin/assets/storeBase64Image';
-
-    var imageThumbnailConsumerUrl = '/admin/queue/{{ $emoticoConfig::$imagethumbnailConsumerCommand }}/startConsumer';
-</script>
-<script type="text/javascript" src="{{ asset('js/app/cropper.js') }}"></script>
-
-
-<script type="text/javascript">
     /**
      * Extend finedata success listener and save new cropping in database
      */
@@ -66,9 +52,7 @@
 
         });
     });
-</script>
 
-<script type="text/javascript">
     /**
      * delete crop event
      */
@@ -83,4 +67,14 @@
             $("#row_" + crop.attr("data-cropping-id")).remove();
         });
     });
+
+    /**
+     * Configure cropperjs and include it
+     * @type {string}
+     */
+    var base64ImageUploadUrl = '/admin/assets/storeBase64Image';
+
+    var imageThumbnailConsumerUrl = '/admin/queue/{{ $emoticoConfig::$imagethumbnailConsumerCommand }}/startConsumer';
+
 </script>
+<script type="text/javascript" src="{{ asset('js/app/cropper.js') }}"></script>
