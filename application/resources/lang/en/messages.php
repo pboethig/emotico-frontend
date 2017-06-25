@@ -54,5 +54,6 @@ return [
     'Toolbar' => 'Toolbar',
     'OriginalAsset'=>'Original Asset',
     'data'=>'Data',
-    'connections'=>'Connections'
+    'connections'=>'Connections',
+    'delete'=>'delete',
 ];

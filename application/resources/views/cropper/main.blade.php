@@ -12,10 +12,10 @@
         <div class="col-md-2">
             @include('cropper.storedCroppings')
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8">
            @include('cropper.imagepanel')
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             @include('cropper.sidebar')
             @include("bread.assets.import.connections")
         </div>

@@ -1,4 +1,4 @@
-<div class="col-md-3 docs-toggles">
+<div class="col-md-2 docs-toggles">
     <h3>{{ __('messages.PredefinedFormats') }}</h3>
     <hr/>
     <div class="btn-group d-flex flex-nowrap" data-toggle="buttons">

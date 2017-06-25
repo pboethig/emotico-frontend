@@ -54,5 +54,6 @@ return [
     'Toolbar' => 'Werkzeugleiste',
     'OriginalAsset'=>'Original Asset',
     'data'=>'Daten',
-    'connections'=>'Verbindungen'
+    'connections'=>'Verbindungen',
+    'delete'=>'Löschen',
 ];

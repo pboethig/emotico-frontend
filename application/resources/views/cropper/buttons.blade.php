@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-9 docs-buttons">
+    <div class="col-md-10 docs-buttons">
         <h3>{{ __("messages.Toolbar") }}:</h3>
         <hr>
         <div class="btn-group">

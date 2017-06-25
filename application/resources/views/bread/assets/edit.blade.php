@@ -20,7 +20,7 @@
                 <div class="clear"></div>
                 <div id="filemanager" style="background-color: white">
                     <div id="content">
-                        <div class="flex panel-bordered" style="height: 1100px!important;">
+                        <div class="flex panel-bordered" style="height: 100%!important;">
                             <div id="left">
                                 <div style="margin: 5px">
                                     @include('cropper.main')
