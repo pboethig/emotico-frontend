@@ -19,9 +19,6 @@
 <!-- diplay video, image and indesign queue-->
 @include('bread.assets.import.queues')
 
-<!-- Display the progressbar -->
-@include('bread.assets.import.progressbar')
-
 <!-- get the import data table -->
 <div class="col-sm-9">
     @include('bread.assets.import.datatable')

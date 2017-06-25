@@ -46,7 +46,8 @@
 
 
 
-        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/panels.css') }}" rel="stylesheet">
     <link href="{{ asset('css/assets/editthumbnaillist.blade.css') }}" rel="stylesheet">
 
     @yield('css')

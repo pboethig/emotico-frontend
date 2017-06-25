@@ -1,5 +1,3 @@
-<h3>{{ __("messages.Data") }}:</h3>
-<hr/>
 <div class="docs-data">
     <div class="input-group input-group-sm">
         <label class="input-group-addon" for="dataX">X</label>

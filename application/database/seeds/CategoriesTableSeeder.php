@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Category;
 
+/**
+ * Class CategoriesTableSeeder
+ */
 class CategoriesTableSeeder extends Seeder
 {
     /**

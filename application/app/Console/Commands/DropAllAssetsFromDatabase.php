@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Asset;
+use App\Models\AssetsCroppings;
 use Illuminate\Console\Command;
 
 class DropAllAssetsFromDatabase extends Command
@@ -43,6 +44,8 @@ class DropAllAssetsFromDatabase extends Command
             $this->info("Deleting Assets");
 
             (new Asset())->newQuery()->delete();
+
+            (new AssetsCroppings())->newQuery()->delete();
 
             $this->info("All Assets are deleted now.");
         }

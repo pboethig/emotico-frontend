@@ -355,7 +355,10 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
     );
 
     public static $classMap = array (
+        'AddCanvasdataToAssetCroppings' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_111328_add_canvasdata_to_asset_croppings.php',
         'AddControllerToDataTypesTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_06_000000_add_controller_to_data_types_table.php',
+        'AddCroppingAssetIdToAssetCroppings' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_145045_add_cropping_asset_id_to_asset_croppings.php',
+        'AddCroppingHashToAssetCroppings' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_151733_add_cropping_hash_to_asset_croppings.php',
         'AddOrderToDataRowsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_21_000000_add_order_to_data_rows_table.php',
         'AddPermissionGroupIdToPermissionsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_15_000000_add_permission_group_id_to_permissions_table.php',
         'AddRouteToMenuItemsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_13_000000_add_route_to_menu_items_table.php',
@@ -367,6 +370,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\FormFields\\EmoticoThumbnailListHandler' => __DIR__ . '/../..' . '/app/FormFields/EmoticoThumbnailListHandler.php',
         'App\\Helper\\Asset\\Cropper\\Image' => __DIR__ . '/../..' . '/app/Helper/Asset/Cropper/Image.php',
+        'App\\Helper\\Asset\\Cropper\\Model' => __DIR__ . '/../..' . '/app/Helper/Asset/Cropper/Model.php',
         'App\\Helper\\Asset\\Import\\Dropzone\\Config' => __DIR__ . '/../..' . '/app/Helper/Asset/Import/Dropzone/Config.php',
         'App\\Helper\\Asset\\Import\\Upload' => __DIR__ . '/../..' . '/app/Helper/Asset/Import/Upload.php',
         'App\\Helper\\Asset\\Import\\UploadFormConfig' => __DIR__ . '/../..' . '/app/Helper/Asset/Import/UploadFormConfig.php',
@@ -394,6 +398,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Asset' => __DIR__ . '/../..' . '/app/Models/Asset.php',
+        'App\\Models\\AssetsCroppings' => __DIR__ . '/../..' . '/app/Models/AssetsCroppings.php',
         'App\\Models\\Company' => __DIR__ . '/../..' . '/app/Models/Company.php',
         'App\\Models\\Market' => __DIR__ . '/../..' . '/app/Models/Market.php',
         'App\\Models\\Marketmemberboard' => __DIR__ . '/../..' . '/app/Models/Marketmemberboard.php',
@@ -840,6 +845,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'EmoticoDatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/EmoticoDatabaseSeeder.php',
         'EmoticoMenuItemsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EmoticoMenuItemsTableSeeder.php',
         'EmoticoPermissionsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EmoticoPermissionsTableSeeder.php',
+        'EmoticoSettingsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EmoticoSettingsTableSeeder.php',
         'Facebook\\WebDriver\\Chrome\\ChromeDriver' => __DIR__ . '/..' . '/facebook/webdriver/lib/Chrome/ChromeDriver.php',
         'Facebook\\WebDriver\\Chrome\\ChromeDriverService' => __DIR__ . '/..' . '/facebook/webdriver/lib/Chrome/ChromeDriverService.php',
         'Facebook\\WebDriver\\Chrome\\ChromeOptions' => __DIR__ . '/..' . '/facebook/webdriver/lib/Chrome/ChromeOptions.php',
@@ -4201,6 +4207,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'Tests\\Functional\\Repository\\Asset\\AssetTest' => __DIR__ . '/../..' . '/tests/Functional/Repository/AssetTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ConfigTest' => __DIR__ . '/../..' . '/tests/Functional/Helper/Asset/Import/Dropzone/ConfigTest.php',
+        'Tests\\Unit\\UploadTest' => __DIR__ . '/../..' . '/tests/Functional/Helper/Asset/Import/UploadTest.php',
         'Tests\\Unit\\UrlTest' => __DIR__ . '/../..' . '/tests/Functional/Helper/Asset/UrlTest.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',

@@ -143,12 +143,24 @@ $(function () {
                         // Bootstrap's Modal
                         //$('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
 
+
                         if (!$download.hasClass('disabled'))
                         {
-                            var filename = new Date().getTime() + $download.attr('download');
+                            window.cropboxdata = $image.cropper('getCropBoxData');
+
+                            var filename = $download.attr('download') + '_' + $.md5($.param(cropboxdata)) + '.png';
+
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
 
                             $.post(base64ImageUploadUrl, {filename: filename, base64Image: result.toDataURL('image/png')}, function(result){
 
+                                $.get(imageThumbnailConsumerUrl, function(result){
+
+                                });
                             });
                         }
                     }

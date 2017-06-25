@@ -6,7 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddCanvasdataToAssetCroppings' => $baseDir . '/database/migrations/2017_06_25_111328_add_canvasdata_to_asset_croppings.php',
     'AddControllerToDataTypesTable' => $baseDir . '/database/migrations/2017_03_06_000000_add_controller_to_data_types_table.php',
+    'AddCroppingAssetIdToAssetCroppings' => $baseDir . '/database/migrations/2017_06_25_145045_add_cropping_asset_id_to_asset_croppings.php',
+    'AddCroppingHashToAssetCroppings' => $baseDir . '/database/migrations/2017_06_25_151733_add_cropping_hash_to_asset_croppings.php',
     'AddOrderToDataRowsTable' => $baseDir . '/database/migrations/2017_04_21_000000_add_order_to_data_rows_table.php',
     'AddPermissionGroupIdToPermissionsTable' => $baseDir . '/database/migrations/2017_01_15_000000_add_permission_group_id_to_permissions_table.php',
     'AddRouteToMenuItemsTable' => $baseDir . '/database/migrations/2017_01_13_000000_add_route_to_menu_items_table.php',
@@ -18,6 +21,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\FormFields\\EmoticoThumbnailListHandler' => $baseDir . '/app/FormFields/EmoticoThumbnailListHandler.php',
     'App\\Helper\\Asset\\Cropper\\Image' => $baseDir . '/app/Helper/Asset/Cropper/Image.php',
+    'App\\Helper\\Asset\\Cropper\\Model' => $baseDir . '/app/Helper/Asset/Cropper/Model.php',
     'App\\Helper\\Asset\\Import\\Dropzone\\Config' => $baseDir . '/app/Helper/Asset/Import/Dropzone/Config.php',
     'App\\Helper\\Asset\\Import\\Upload' => $baseDir . '/app/Helper/Asset/Import/Upload.php',
     'App\\Helper\\Asset\\Import\\UploadFormConfig' => $baseDir . '/app/Helper/Asset/Import/UploadFormConfig.php',
@@ -45,6 +49,7 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Asset' => $baseDir . '/app/Models/Asset.php',
+    'App\\Models\\AssetsCroppings' => $baseDir . '/app/Models/AssetsCroppings.php',
     'App\\Models\\Company' => $baseDir . '/app/Models/Company.php',
     'App\\Models\\Market' => $baseDir . '/app/Models/Market.php',
     'App\\Models\\Marketmemberboard' => $baseDir . '/app/Models/Marketmemberboard.php',
@@ -491,6 +496,7 @@ return array(
     'EmoticoDatabaseSeeder' => $baseDir . '/database/seeds/EmoticoDatabaseSeeder.php',
     'EmoticoMenuItemsTableSeeder' => $baseDir . '/database/seeds/EmoticoMenuItemsTableSeeder.php',
     'EmoticoPermissionsTableSeeder' => $baseDir . '/database/seeds/EmoticoPermissionsTableSeeder.php',
+    'EmoticoSettingsTableSeeder' => $baseDir . '/database/seeds/EmoticoSettingsTableSeeder.php',
     'Facebook\\WebDriver\\Chrome\\ChromeDriver' => $vendorDir . '/facebook/webdriver/lib/Chrome/ChromeDriver.php',
     'Facebook\\WebDriver\\Chrome\\ChromeDriverService' => $vendorDir . '/facebook/webdriver/lib/Chrome/ChromeDriverService.php',
     'Facebook\\WebDriver\\Chrome\\ChromeOptions' => $vendorDir . '/facebook/webdriver/lib/Chrome/ChromeOptions.php',
@@ -3852,6 +3858,7 @@ return array(
     'Tests\\Functional\\Repository\\Asset\\AssetTest' => $baseDir . '/tests/Functional/Repository/AssetTest.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Tests\\Unit\\ConfigTest' => $baseDir . '/tests/Functional/Helper/Asset/Import/Dropzone/ConfigTest.php',
+    'Tests\\Unit\\UploadTest' => $baseDir . '/tests/Functional/Helper/Asset/Import/UploadTest.php',
     'Tests\\Unit\\UrlTest' => $baseDir . '/tests/Functional/Helper/Asset/UrlTest.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',

@@ -57,4 +57,12 @@ class Client
 
         return $response;
     }
+
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function startWebsocket()
+    {
+        return $this->get('/websocket/start');
+    }
 }

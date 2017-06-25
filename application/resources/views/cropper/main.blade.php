@@ -2,37 +2,85 @@
     <script src="{{ asset('js/goswebsocket/js/vendor/autobahn.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/goswebsocket/js/gos_web_socket_client.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app/Websockets/Converter.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/app/jquery-md5.js') }}" type="text/javascript"></script>
+
 <!-- DownloadDialog -->
 @include('cropper.dialogs.getCroppedCanvas')
 <!-- Content -->
     @include("cropper.buttons")
     <div class="row">
-        <div class="col-md-2" style="overflow-y: visible; max-height: 400px!important;">
+        <div class="col-md-2">
             @include('cropper.storedCroppings')
         </div>
         <div class="col-md-7">
-            <div class="img-container" style="margin-top:10px">
-                <img style="width: 800px!important;" id="image" src="{{ $base64Image }}" alt="Picture" class="drop-shadow" />
-            </div>
+           @include('cropper.imagepanel')
         </div>
         <div class="col-md-3">
-            @include("cropper.data-panel")
-
-            <!-- imort backend connectionpanel for crop saving-->
+            @include('cropper.sidebar')
             @include("bread.assets.import.connections")
         </div>
     </div>
 
 <script type="text/javascript">
-    var base64ImageUploadUrl = '{{ $emoticoConfig::$base64ImageUploadUrl }}';
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+</script>
+<script type="text/javascript">
 
     $(document).ready(function()
     {
+        /**
+         * Initialize WebsocketListener for imageconverter
+         * @type {Converter}
+         */
         var converter = new Converter(<?=$uploadFormConfig?>);
-
-        converter.init();
+        converter.init(false);
     });
-
 </script>
 
+<!-- add cropper.js -->
+<script type="text/javascript">
+    var base64ImageUploadUrl = '/admin/assets/storeBase64Image';
+
+    var imageThumbnailConsumerUrl = '/admin/queue/{{ $emoticoConfig::$imagethumbnailConsumerCommand }}/startConsumer';
+</script>
 <script type="text/javascript" src="{{ asset('js/app/cropper.js') }}"></script>
+
+
+<script type="text/javascript">
+    /**
+     * Extend finedata success listener and save new cropping in database
+     */
+    $(document).on("thumbnail.finedata.created", function (event)
+    {
+        event.message.user_id = '{{ \Illuminate\Support\Facades\Auth::user()->id }}';
+
+        event.message.canvasdata = window.cropboxdata;
+
+        $.post('{{ config('app.url') }}/admin/assets/saveCropping', {message: event.message}, function(result){
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    /**
+     * delete crop event
+     */
+    $('.triggerDeleteCropping').on("click", function (event)
+    {
+        var crop = $(this);
+
+        $.get('{{ config('app.url') }}/admin/asset/' + crop.attr("data-cropping-id") + '/deleteCropping', function(result)
+        {
+            crop.remove();
+
+            $("#row_" + crop.attr("data-cropping-id")).remove();
+        });
+    });
+</script>

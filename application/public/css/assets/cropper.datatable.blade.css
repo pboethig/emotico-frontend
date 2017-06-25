@@ -1,0 +1,24 @@
+div.cropperDatatable
+{
+    max-height: 850px;
+    overflow-y: auto;
+}
+
+
+div.cropperDatatable table tr,
+.cropperDatatable table tr td,
+.cropperDatatable table tr img
+{
+    margin: 0;
+    padding: 0;
+}
+.cropperDatatable table tr td
+{
+    padding: 3px;
+    border:0;
+}
+
+.cropperDatatable table tr td a.delete
+{
+    margin-left: 3px;
+}

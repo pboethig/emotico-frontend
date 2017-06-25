@@ -12,18 +12,27 @@ function Converter(config)
      */
     this.config = config;
 
+    this.initMessageQueue=true;
+
     /**
      * Constructor
      */
-    this.init = function()
+    this.init = function(initMessageQueue)
     {
-        this.pingInDesignserver();
+        if(initMessageQueue==undefined) initMessageQueue=false;
+
+        this.initMessageQueue = initMessageQueue;
 
         this.attachWebsockets();
 
-        this.setMessageInfosFromQueue(['indesignthumbnails', 'videothumbnails', 'imagethumbnails']);
+        this.pingInDesignserver();
 
-        this.startMessageConsumer([this.config.videothumbnailConsumerCommand,this.config.videoLowresConsumerCommand, this.config.imagethumbnailConsumerCommand]);
+        if(this.initMessageQueue)
+        {
+            this.setMessageInfosFromQueue(['indesignthumbnails', 'videothumbnails', 'imagethumbnails']);
+
+            this.startMessageConsumer([this.config.videothumbnailConsumerCommand,this.config.videoLowresConsumerCommand, this.config.imagethumbnailConsumerCommand]);
+        }
     };
 
     /**
@@ -117,7 +126,7 @@ function Converter(config)
                     "imageUrl" : imageUrl
                 };
 
-                $('#message').append(template(data));
+                $('#message').prepend(template(data));
             }
             catch(Exception)
             {
@@ -208,8 +217,6 @@ function Converter(config)
      */
     this.getThumbnailUrl = function (message) {
 
-        console.log(message);
-
         var thumbnailurl="";
 
         if(message.thumbnailList[0] == undefined)
@@ -232,18 +239,18 @@ function Converter(config)
     {
         var scope = this;
 
-        var webUrl = this.config.weburl + '/websocket/start?time'+Date.now();
+        var websocketStarterUrl =  '/admin/websocket/start?time' + Date.now();
 
         try
         {
             //have to request 2 times after backend restart. Why ever. WTF
-            $.get(webUrl, function( data )
+            $.get(websocketStarterUrl, function( data )
             {
                 scope.addWebsocketListener(scope);
             });
 
 
-            $.get(webUrl, function( data )
+            $.get(websocketStarterUrl, function( data )
             {
                 scope.addWebsocketListener(scope);
 
@@ -267,6 +274,7 @@ function Converter(config)
      */
     this.addWebsocketListener = function (scope)
     {
+
         var webSocket = WS.connect(this.config.websocketUrl);
 
         /**
@@ -303,7 +311,7 @@ function Converter(config)
 
                     scope.setDataTableRow(message);
 
-                    //document.querySelector("#total-progress .progress-bar").style.width = 50 + "%";
+                    document.querySelector("#total-progress .progress-bar").style.width = 50 + "%";
 
                 }catch(Exception)
                 {
@@ -338,6 +346,13 @@ function Converter(config)
                     {
                         $('#'+message.ticketId).attr('src',thumbnailurl);
                     }
+
+
+                    $.event.trigger({
+                        type: "thumbnail.finedata.created",
+                        message: message,
+                        time: new Date()
+                    });
 
                     document.querySelector("#total-progress .progress-bar").style.width = 100 + "%";
                 }

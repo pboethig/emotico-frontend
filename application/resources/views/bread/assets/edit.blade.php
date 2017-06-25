@@ -15,16 +15,12 @@
                             <span class="glyphicon glyphicon-list"></span>&nbsp;
                             {{ __('messages.ReturnToList') }}
                         </a>
-                        <a href="javascript:void(0);" class="btn btn-primary openSupportedFormats">
-                            <span class="glyphicon glyphicon-list"></span>&nbsp;
-                            {{ __('messages.ShowSupportedFormats') }}
-                        </a>
                     </h3>
                 </div>
                 <div class="clear"></div>
                 <div id="filemanager" style="background-color: white">
                     <div id="content">
-                        <div class="flex panel-bordered">
+                        <div class="flex panel-bordered" style="height: 1100px!important;">
                             <div id="left">
                                 <div style="margin: 5px">
                                     @include('cropper.main')
@@ -32,8 +28,8 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- #filemanager -->
-            </div><!-- .row -->
-        </div><!-- .col-md-12 -->
-    </div><!-- .page-content container-fluid -->
+                </div>
+            </div>
+        </div>
+    </div>
 @stop

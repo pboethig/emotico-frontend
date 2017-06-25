@@ -66,6 +66,12 @@ class Config
     public static $base64ImageUploadUrl;
 
     /**
+     * @var string
+     */
+    public static $imageThumbnailConsumerUrl;
+
+
+    /**
      * Config constructor.
      */
     public function __construct()
@@ -97,5 +103,8 @@ class Config
         self::$indesignthumbnailConsumerCommand = config('app')['mediaconverter.queue.indesign.consumercommand'];
 
         self::$base64ImageUploadUrl = self::$weburl.'/'.config('app')['mediaconverter.asset.base64imageuploadurl'];
+
+        self::$imageThumbnailConsumerUrl = self::$weburl . '/queue/'.self::$imagethumbnailConsumerCommand . '/startConsumer';
+
     }
 }

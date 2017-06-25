@@ -72,23 +72,6 @@ class EmoticoMenuItemsTableSeeder extends Seeder
                     'order'      => 13,
                 ])->save();
             }
-
-            $menuItem = MenuItem::firstOrNew([
-                'menu_id'    => $menu->id,
-                'title'      => 'Croppings',
-                'url'        => 'admin/assets/croppings',
-            ]);
-
-            if (!$menuItem->exists)
-            {
-                $menuItem->fill([
-                    'target'     => '_self',
-                    'icon_class' => '',
-                    'color'      => null,
-                    'parent_id'  => $assetsMenuItem->id,
-                    'order'      => 14,
-                ])->save();
-            }
         }
     }
 }

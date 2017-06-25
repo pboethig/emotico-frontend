@@ -32,4 +32,22 @@ class Upload
 
         return $res;
     }
+
+    /**
+     * @param string $filename
+     * @param $base64Image
+     * @return ResponseInterface
+     */
+    public function storeBase64Image(string $filename, $base64Image) : ResponseInterface
+    {
+        $guzzle = new \GuzzleHttp\Client();
+
+        $config = new Config();
+
+        $data = ['form_params'=>['filename' => $filename, 'base64Image'=>$base64Image]];
+
+        $res = $guzzle->request('POST', $config::$weburl.'/assets/storeBase64Image', $data);
+
+        return $res;
+    }
 }

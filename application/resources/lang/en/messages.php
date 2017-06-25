@@ -51,5 +51,8 @@ return [
     'ScaleX'=>'Scale-X',
     'ScaleY'=>'Scale-Y',
     'Rotate'=>'Rotate',
-    'Toolbar' => 'Toolbar'
+    'Toolbar' => 'Toolbar',
+    'OriginalAsset'=>'Original Asset',
+    'data'=>'Data',
+    'connections'=>'Connections'
 ];

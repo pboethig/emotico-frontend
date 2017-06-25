@@ -9,3 +9,4 @@
 
 <span class="badge indesignthumbnails">0</span>
 <label ><strong>{{ __('messages.filesinindesignqueue') }}:</strong></label>
+<hr style="clear: both">

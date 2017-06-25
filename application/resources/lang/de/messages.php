@@ -51,5 +51,8 @@ return [
     'ScaleX'=>'X-Skallierung',
     'ScaleY'=>'Y-Skallierung',
     'Rotate'=>'Drehung',
-    'Toolbar' => 'Werkzeugleiste'
+    'Toolbar' => 'Werkzeugleiste',
+    'OriginalAsset'=>'Original Asset',
+    'data'=>'Daten',
+    'connections'=>'Verbindungen'
 ];

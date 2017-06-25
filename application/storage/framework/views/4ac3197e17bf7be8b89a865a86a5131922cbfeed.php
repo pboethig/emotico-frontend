@@ -46,7 +46,8 @@
 
 
 
-        <link href="<?php echo e(asset('css/main.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('css/main.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('css/panels.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('css/assets/editthumbnaillist.blade.css')); ?>" rel="stylesheet">
 
     <?php echo $__env->yieldContent('css'); ?>
