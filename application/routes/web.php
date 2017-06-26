@@ -40,4 +40,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+/**
+ * Webhooks
+ */
 Route::post('/webhooks/thumbnailFinedataCreated', 'WebHookController@thumbnailFinedataCreated');
+Route::post('/webhooks/hiresCroppingCreated', 'WebHookController@hiresCroppingCreated');
