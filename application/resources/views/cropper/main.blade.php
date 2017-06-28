@@ -45,10 +45,11 @@
     $(document).on("thumbnail.finedata.created", function (event)
     {
         event.message.user_id = '{{ \Illuminate\Support\Facades\Auth::user()->id }}';
-
         event.message.canvasdata = window.cropboxdata;
+        event.message.browserimagedata = window.browserimagedata;
 
-        $.post('{{ config('app.url') }}/admin/assets/saveCropping', {message: event.message}, function(result){
+        $.post('{{ config('app.url') }}/admin/assets/saveCropping', {message: event.message}, function(result)
+        {
 
         });
     });
@@ -60,7 +61,7 @@
     {
         var crop = $(this);
 
-        $.get('{{ config('app.url') }}/admin/asset/' + crop.attr("data-cropping-id") + '/deleteCropping', function(result)
+        $.get('{{ config('app.url') }}/admin/assets/' + crop.attr("data-cropping-id") + '/deleteCropping', function(result)
         {
             crop.remove();
 

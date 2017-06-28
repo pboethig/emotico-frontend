@@ -52,6 +52,8 @@ class AssetControllerTest extends FeatureTestAbstract
          * call Save Cropping controller
          */
         $response = $this->actingAs($this->user)->post('/admin/assets/saveCropping', ['message'=>$message]);
+
+
         $response->assertStatus(200);
         $assetCropping = json_decode($response->baseResponse->getContent());
 
@@ -90,7 +92,6 @@ class AssetControllerTest extends FeatureTestAbstract
         /**
          * Delete testdata
          */
-
         AssetsCroppings::find($assetCropping->id)->delete();
 
         $asset->delete();

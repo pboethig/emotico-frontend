@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class Stock
@@ -16,10 +15,10 @@ class AssetsCroppings extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'asset_id','user_id','canvasdata','cropping_asset_id','cropping_hash'];
+    protected $fillable = ['id', 'asset_id','user_id','canvasdata','cropping_asset_id','cropping_hash','browserimagedata'];
 
     /**
-     * @return mixed
+     * @return Asset
      */
     public function asset()
     {
@@ -54,5 +53,4 @@ class AssetsCroppings extends Model
 
         return false;
     }
-
 }

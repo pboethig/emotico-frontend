@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddBrowserimagedataToAssetCroppings' => $baseDir . '/database/migrations/2017_06_27_220407_add_browserimagedata_to_asset_croppings.php',
     'AddCanvasdataToAssetCroppings' => $baseDir . '/database/migrations/2017_06_25_111328_add_canvasdata_to_asset_croppings.php',
     'AddControllerToDataTypesTable' => $baseDir . '/database/migrations/2017_03_06_000000_add_controller_to_data_types_table.php',
     'AddCroppingAssetIdToAssetCroppings' => $baseDir . '/database/migrations/2017_06_25_145045_add_cropping_asset_id_to_asset_croppings.php',
@@ -22,6 +23,7 @@ return array(
     'App\\Dimmer\\TradeDimmer' => $baseDir . '/app/Dimmer/TradeDimmer.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\FormFields\\EmoticoThumbnailListHandler' => $baseDir . '/app/FormFields/EmoticoThumbnailListHandler.php',
+    'App\\Helper\\Asset\\Cropper\\HiresCroppingRequest' => $baseDir . '/app/Helper/Asset/Cropper/HiresCroppingRequest.php',
     'App\\Helper\\Asset\\Cropper\\Image' => $baseDir . '/app/Helper/Asset/Cropper/Image.php',
     'App\\Helper\\Asset\\Cropper\\Model' => $baseDir . '/app/Helper/Asset/Cropper/Model.php',
     'App\\Helper\\Asset\\Import\\Dropzone\\Config' => $baseDir . '/app/Helper/Asset/Import/Dropzone/Config.php',
@@ -61,6 +63,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Repository\\Asset' => $baseDir . '/app/Repository/Asset.php',
+    'App\\Repository\\AssetsCroppings' => $baseDir . '/app/Repository/AssetsCroppings.php',
     'App\\Repository\\Emotico\\Client' => $baseDir . '/app/Repository/Emotico/Client.php',
     'App\\Repository\\Emotico\\Config' => $baseDir . '/app/Repository/Emotico/Config.php',
     'App\\Repository\\Emotico\\MediaconverterConfig' => $baseDir . '/app/Repository/Emotico/MediaconverterConfig.php',
@@ -3850,9 +3853,11 @@ return array(
     'Tests\\Feature\\Asset\\BreadTest' => $baseDir . '/tests/Feature/Asset/BreadTest.php',
     'Tests\\Feature\\Controller\\WebhookControllerTest' => $baseDir . '/tests/Feature/Controller/WebhookControllerTest.php',
     'Tests\\Feature\\FeatureTestAbstract' => $baseDir . '/tests/Feature/FeatureTestAbstract.php',
+    'Tests\\Feature\\Repository\\Emotico\\ClientTest' => $baseDir . '/tests/Feature/Repository/Emotico/ClientTest.php',
     'Tests\\Feature\\Repository\\Emotico\\MediaconverterConfigTest' => $baseDir . '/tests/Feature/Repository/Emotico/MediaconverterConfigTest.php',
     'Tests\\Feature\\Repository\\Emotico\\QueueTest' => $baseDir . '/tests/Feature/Repository/Emotico/QueueTest.php',
     'Tests\\Functional\\Helper\\Asset\\ThumbnailTest' => $baseDir . '/tests/Functional/Helper/Asset/ThumbnailTest.php',
+    'Tests\\Functional\\Repository\\Asset\\AssetCroppingsTest' => $baseDir . '/tests/Functional/Repository/AssetsCroppingsTest.php',
     'Tests\\Functional\\Repository\\Asset\\AssetTest' => $baseDir . '/tests/Functional/Repository/AssetTest.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Tests\\Unit\\ConfigTest' => $baseDir . '/tests/Functional/Helper/Asset/Import/Dropzone/ConfigTest.php',

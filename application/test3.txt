@@ -1,1 +1,0 @@
-{"message":{"event":"imagine.hires.cropping.created","ticketId":"afcc02532f88a17138321b080c4342f5","uuid":"croppingtest","version":"dsci1424","extension":"jpg","thumbnailList":[],"errors":[]}}

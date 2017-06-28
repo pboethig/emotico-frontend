@@ -146,7 +146,10 @@ $(function () {
 
                         if (!$download.hasClass('disabled'))
                         {
-                            window.cropboxdata = $image.cropper('getCropBoxData');
+                            window.cropboxdata = $image.cropper('getData');
+                            window.cropboxdata.top = window.cropboxdata.x;
+                            window.cropboxdata.left = window.cropboxdata.y;
+                            window.browserimagedata = $image.cropper('getImageData');
 
                             var filename = $download.attr('download') + '_' + $.md5($.param(cropboxdata)) + '.png';
 

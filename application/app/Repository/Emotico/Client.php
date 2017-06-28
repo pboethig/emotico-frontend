@@ -7,8 +7,8 @@
  */
 
 namespace App\Repository\Emotico;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Facades\Log;
+use App\Helper\Asset\Cropper\HiresCroppingRequest;
+
 
 /**
  * Class Client
@@ -59,10 +59,32 @@ class Client
     }
 
     /**
+     * @param string $path
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function post(string $path, array $parameter)
+    {
+        return $this->client->request("POST", Config::$weburl.$path, $parameter);
+    }
+
+    /**
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function startWebsocket()
     {
         return $this->get('/websocket/start');
+    }
+
+    /**
+     * @param \App\Models\AssetsCroppings $cropping
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function generateHiresCropping(\App\Models\AssetsCroppings $cropping)
+    {
+        $payload = new HiresCroppingRequest($cropping);
+        
+        $response = $this->post('/assets/generateHiresCropping', ['body'=>$payload->toJson()]);
+
+        return $response;
     }
 }

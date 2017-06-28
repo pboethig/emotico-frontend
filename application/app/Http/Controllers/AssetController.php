@@ -24,7 +24,6 @@ use TCG\Voyager\Facades\Voyager;
  */
 class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadController
 {
-
     /**
      * HomeController constructor.
      */
@@ -39,7 +38,6 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
      */
     public function index(Request $request)
     {
-
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
@@ -181,57 +179,13 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveCropping(Request $request)
+    public function saveCropping(Request $request, \App\Repository\AssetsCroppings $assetsCroppings)
     {
         try
         {
-            $message = json_decode(json_encode($request->get('message')));
-            if (!$message->uuid) throw new \InvalidArgumentException('message invalid');
-
-            /**
-             * Get user
-             */
-            $user = User::find($message->user_id);
-            if (!$user->id) throw new \InvalidArgumentException('uuid' . $request->get('uuid') . ' not found');
-
-            //have to wait till the backend event sends the cropped asset.
-            sleep(2);
-            /**
-             * Get parent asset
-             */
-            $assetUuid = Model::getAssetUiidFromEventMessage($message);
-            $asset = Asset::where('uuid', $assetUuid)->get()->first();
-
-            if (!$asset) throw new \InvalidArgumentException('asset ' . $assetUuid . ' not found.');
-
-            /**
-             * CroppingAsset
-             */
-            $croppingAsset = Asset::where('uuid', $message->uuid)->get()->first();
-
-            if (!$croppingAsset) throw new \InvalidArgumentException('cropping asset ' . $message->uuid . ' not found.');
-
-            /**
-             * Save cropping
-             */
-            $canvasData = json_encode($message->canvasdata);
-            $croppingData = [
-                'asset_id' => $asset->id,
-                'cropping_asset_id' => $croppingAsset->id,
-                'user_id' => $user->id,
-                'canvasdata'=> $canvasData,
-                'cropping_hash'=> md5($user->id.$croppingAsset->id.$asset->id)
-            ];
-
-            $assetCropping = new AssetsCroppings($croppingData);
-
-            if(!$assetCropping->doesExists())
-            {
-                $assetCropping->save();
-            }
-
-
-        }catch(\Exception $ex)
+            $assetCropping = $assetsCroppings->save($request, 2);
+        }
+        catch(\Exception $ex)
         {
             $response = new Response();
 
@@ -275,6 +229,7 @@ class AssetController extends \TCG\Voyager\Http\Controllers\VoyagerBreadControll
      */
     public function deleteCropping(int $id)
     {
+
         /** @var  $crop AssetsCroppings */
         $crop = AssetsCroppings::find($id);
 

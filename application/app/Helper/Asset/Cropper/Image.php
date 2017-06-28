@@ -9,6 +9,9 @@
 namespace App\Helper\Asset\Cropper;
 use App\Helper\Asset\Url;
 use App\Models\Asset;
+use App\Repository\AssetsCroppings;
+use App\Repository\Emotico\Client;
+use App\Repository\Emotico\Config;
 
 
 /**
@@ -17,6 +20,7 @@ use App\Models\Asset;
  */
 class Image
 {
+
     /**
      * @param Asset $asset
      * @param string $extension
@@ -33,5 +37,13 @@ class Image
         $image='data:image/'.$extension.';base64,' . $base64;
 
         return $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getCropperImageWith()
+    {
+        return config('app')['mediaconverter.cropperimagewith'];
     }
 }

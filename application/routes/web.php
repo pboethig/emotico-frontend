@@ -9,7 +9,7 @@ Auth::routes();
 Route::get('/admin/assets/import', 'AssetController@import');
 Route::post('/admin/assets/saveCropping', 'AssetController@saveCropping');
 Route::post('/admin/assets/storeBase64Image', 'AssetController@storeBase64Image');
-Route::get('/admin/asset/{id}/deleteCropping', 'AssetController@deleteCropping');
+Route::get('/admin/assets/{id}/deleteCropping', 'AssetController@deleteCropping');
 
 /**
  * Queue

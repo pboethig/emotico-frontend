@@ -266,4 +266,7 @@ return [
     'mediaconverter.import.dropzone.headers'=>env('mediaconverter.import.dropzone.headers'),
     'mediaconverter.import.dropzone.acceptedFiles'=>env('mediaconverter.import.dropzone.acceptedFiles'),
     'mediaconverter.asset.base64imageuploadurl'=>env('mediaconverter.asset.base64imageuploadurl'),
+    'mediaconverter.cropperimagewith'=>env('mediaconverter.cropperimagewith'),
+
+
 ];

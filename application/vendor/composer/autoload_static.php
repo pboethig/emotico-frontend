@@ -355,6 +355,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
     );
 
     public static $classMap = array (
+        'AddBrowserimagedataToAssetCroppings' => __DIR__ . '/../..' . '/database/migrations/2017_06_27_220407_add_browserimagedata_to_asset_croppings.php',
         'AddCanvasdataToAssetCroppings' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_111328_add_canvasdata_to_asset_croppings.php',
         'AddControllerToDataTypesTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_06_000000_add_controller_to_data_types_table.php',
         'AddCroppingAssetIdToAssetCroppings' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_145045_add_cropping_asset_id_to_asset_croppings.php',
@@ -371,6 +372,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'App\\Dimmer\\TradeDimmer' => __DIR__ . '/../..' . '/app/Dimmer/TradeDimmer.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\FormFields\\EmoticoThumbnailListHandler' => __DIR__ . '/../..' . '/app/FormFields/EmoticoThumbnailListHandler.php',
+        'App\\Helper\\Asset\\Cropper\\HiresCroppingRequest' => __DIR__ . '/../..' . '/app/Helper/Asset/Cropper/HiresCroppingRequest.php',
         'App\\Helper\\Asset\\Cropper\\Image' => __DIR__ . '/../..' . '/app/Helper/Asset/Cropper/Image.php',
         'App\\Helper\\Asset\\Cropper\\Model' => __DIR__ . '/../..' . '/app/Helper/Asset/Cropper/Model.php',
         'App\\Helper\\Asset\\Import\\Dropzone\\Config' => __DIR__ . '/../..' . '/app/Helper/Asset/Import/Dropzone/Config.php',
@@ -410,6 +412,7 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Repository\\Asset' => __DIR__ . '/../..' . '/app/Repository/Asset.php',
+        'App\\Repository\\AssetsCroppings' => __DIR__ . '/../..' . '/app/Repository/AssetsCroppings.php',
         'App\\Repository\\Emotico\\Client' => __DIR__ . '/../..' . '/app/Repository/Emotico/Client.php',
         'App\\Repository\\Emotico\\Config' => __DIR__ . '/../..' . '/app/Repository/Emotico/Config.php',
         'App\\Repository\\Emotico\\MediaconverterConfig' => __DIR__ . '/../..' . '/app/Repository/Emotico/MediaconverterConfig.php',
@@ -4199,9 +4202,11 @@ class ComposerStaticInitd6667aa6b5293d617617d933ca49757b
         'Tests\\Feature\\Asset\\BreadTest' => __DIR__ . '/../..' . '/tests/Feature/Asset/BreadTest.php',
         'Tests\\Feature\\Controller\\WebhookControllerTest' => __DIR__ . '/../..' . '/tests/Feature/Controller/WebhookControllerTest.php',
         'Tests\\Feature\\FeatureTestAbstract' => __DIR__ . '/../..' . '/tests/Feature/FeatureTestAbstract.php',
+        'Tests\\Feature\\Repository\\Emotico\\ClientTest' => __DIR__ . '/../..' . '/tests/Feature/Repository/Emotico/ClientTest.php',
         'Tests\\Feature\\Repository\\Emotico\\MediaconverterConfigTest' => __DIR__ . '/../..' . '/tests/Feature/Repository/Emotico/MediaconverterConfigTest.php',
         'Tests\\Feature\\Repository\\Emotico\\QueueTest' => __DIR__ . '/../..' . '/tests/Feature/Repository/Emotico/QueueTest.php',
         'Tests\\Functional\\Helper\\Asset\\ThumbnailTest' => __DIR__ . '/../..' . '/tests/Functional/Helper/Asset/ThumbnailTest.php',
+        'Tests\\Functional\\Repository\\Asset\\AssetCroppingsTest' => __DIR__ . '/../..' . '/tests/Functional/Repository/AssetsCroppingsTest.php',
         'Tests\\Functional\\Repository\\Asset\\AssetTest' => __DIR__ . '/../..' . '/tests/Functional/Repository/AssetTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ConfigTest' => __DIR__ . '/../..' . '/tests/Functional/Helper/Asset/Import/Dropzone/ConfigTest.php',

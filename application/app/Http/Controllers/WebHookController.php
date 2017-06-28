@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
-use GuzzleHttp\Psr7\Response;
 use Symfony\Component\HttpFoundation\Request;
 use TCG\Voyager\Http\Controllers\Controller;
 
@@ -28,7 +27,7 @@ class WebHookController extends Controller
                 'version' => $data['message']['version'],
                 'extension' => $data['message']['extension'],
                 'type' => 'image',
-                'thumbnailList' => json_encode([])
+                'thumbnailList' => json_encode($data['message']['thumbnailList'])
             ];
 
             $asset = new Asset($assetData);
