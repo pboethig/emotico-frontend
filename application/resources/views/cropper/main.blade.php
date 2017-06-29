@@ -3,12 +3,14 @@
     <script src="{{ asset('js/goswebsocket/js/gos_web_socket_client.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app/Websockets/Converter.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app/jquery-md5.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/app/makefixed.min.js') }}" type="text/javascript"></script>
+
 
 <!-- DownloadDialog -->
 @include('cropper.dialogs.getCroppedCanvas')
 <!-- Content -->
-    @include("cropper.buttons")
     <div class="row">
+        @include("cropper.buttons")
         <div class="col-md-2">
             @include('cropper.storedCroppings')
         </div>
@@ -79,3 +81,34 @@
 
 </script>
 <script type="text/javascript" src="{{ asset('js/app/cropper.js') }}"></script>
+
+<script type="text/javascript">
+    /**
+     * make sticky elements
+     */
+    $(".docs-buttons").makeFixed();
+
+    /**
+     * Fix sidebar
+     */
+    $(".croppingSidebar").makeFixed({
+        onFixed: function (el)
+        {
+            $(el).children().css
+            ({
+                top: '70px'
+            });
+
+            $(".breadcrumb").hide();
+        },
+        onUnFixed: function (el)
+        {
+            $(el).children().css
+            ({
+                top: '0px'
+            });
+
+            $(".breadcrumb").show();
+        }
+    });
+</script>

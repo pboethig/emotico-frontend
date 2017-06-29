@@ -1,7 +1,4 @@
-<div class="col-md-2 docs-toggles">
-    <h3>{{ __('messages.PredefinedFormats') }}</h3>
-    <hr/>
-    <div class="btn-group d-flex flex-nowrap" data-toggle="buttons">
+    <div class="btn-group d-flex docs-toggles" data-toggle="buttons">
         <label class="btn btn-primary active">
             <input type="radio" class="sr-only" id="aspectRatio0" name="aspectRatio" value="1.7777777777777777">
             <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="aspectRatio: 16 / 9">
@@ -33,4 +30,3 @@
             </span>
         </label>
     </div>
-</div><!-- /.docs-toggles -->

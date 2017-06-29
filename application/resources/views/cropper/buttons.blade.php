@@ -1,6 +1,7 @@
 <div class="row">
-    <div class="col-md-10 docs-buttons">
+    <div class="col-md-10" style="margin-left: 20px">
         <h3>{{ __("messages.Toolbar") }}:</h3>
+        <div class="docs-buttons">
         <hr>
         <div class="btn-group">
             <button type="button" class="btn btn-primary" data-method="setDragMode" data-option="move" title="Move">
@@ -99,6 +100,7 @@
             {{ __('messages.Zoom') }} 100%
           </span>
         </button>
-    </div><!-- /.docs-buttons -->
-    @include("cropper.predefinedFormats");
+            @include("cropper.predefinedFormats");
+        </div><!-- /.docs-buttons -->
+    </div>
 </div>
