@@ -10,7 +10,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="admin-section-title">
-                    <h3><i class="voyager-images"></i>{{ __('messages.assetEdit') }}
+                    <h3><i class="voyager-images"></i>{{ __('messages.assetEdit') }} "{{ $dataTypeContent->uuid }} / {{ $dataTypeContent->version }}.{{ $dataTypeContent->extension }}"
+                        <br/>
                         <a href="{{ url('/admin/assets') }}" class="btn btn-warning">
                             <span class="glyphicon glyphicon-list"></span>&nbsp;
                             {{ __('messages.ReturnToList') }}
