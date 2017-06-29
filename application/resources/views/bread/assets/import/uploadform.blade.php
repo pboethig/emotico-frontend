@@ -41,6 +41,10 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        new UploadForm(<?=$uploadFormConfig?>).init(new Converter(<?=$uploadFormConfig?>));
+        var converter = new Converter(<?=$uploadFormConfig?>);
+
+        converter.init(true);
+
+        new UploadForm(<?=$uploadFormConfig?>).init(converter);
     });
 </script>
