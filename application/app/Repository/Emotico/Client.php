@@ -82,7 +82,7 @@ class Client
     public function generateHiresCropping(\App\Models\AssetsCroppings $cropping)
     {
         $payload = new HiresCroppingRequest($cropping);
-        
+
         $response = $this->post('/assets/generateHiresCropping', ['body'=>$payload->toJson()]);
 
         return $response;

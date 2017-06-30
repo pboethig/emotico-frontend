@@ -1,7 +1,4 @@
-
-@php(
-    $thumbnailList = json_decode($dataTypeContent->{$row->field},true)
-)
+@php($thumbnailList = json_decode($dataTypeContent->{$row->field},true))
 <hr class="">
 <div class="container editthumbnaillist">
     <div class="row">

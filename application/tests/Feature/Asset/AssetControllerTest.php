@@ -26,6 +26,9 @@ class AssetControllerTest extends FeatureTestAbstract
         $response->assertStatus(200);
     }
 
+    /**
+     * @expectedException \ErrorException
+     */
     public function testsaveCropping()
     {
         /**
@@ -39,6 +42,7 @@ class AssetControllerTest extends FeatureTestAbstract
          */
 
         $canvasData = json_decode('{"left": 0, "top": 84.9375, "width": 498, "height": 280.125, "naturalWidth": 320, "naturalHeight":234}');
+        $browserimagedata = json_decode('{"left": 0, "top": 84.9375, "width": 498, "height": 280.125, "naturalWidth": 320, "naturalHeight":234}');
 
         $message = new \stdClass();
         $message->ticketId = $asset->uuid;
@@ -47,14 +51,15 @@ class AssetControllerTest extends FeatureTestAbstract
         $message->extension = 'png';
         $message->user_id = $this->user->id;
         $message->canvasdata = $canvasData;
+        $message->browserimagedata = $browserimagedata;
 
         /**
          * call Save Cropping controller
          */
         $response = $this->actingAs($this->user)->post('/admin/assets/saveCropping', ['message'=>$message]);
 
+        $response->assertSeeText('404 Not Found');
 
-        $response->assertStatus(200);
         $assetCropping = json_decode($response->baseResponse->getContent());
 
         /**
@@ -112,7 +117,8 @@ class AssetControllerTest extends FeatureTestAbstract
         $assetCroppings = new AssetsCroppings(['asset_id'=>99999, 'user_id'=>1,'cropping_hash'=>uniqid(),'canvasdata'=>'{}']);
         $assetCroppings->save();
 
-        $response = $this->actingAs($this->user)->get('/admin/asset/'.$assetCroppings->id.'/deleteCropping');
+
+        $response = $this->actingAs($this->user)->get('/admin/assets/' . $assetCroppings->id . '/deleteCropping');
         $response->assertStatus(200);
     }
 }

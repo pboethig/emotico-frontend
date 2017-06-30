@@ -49,6 +49,9 @@ class AssetsCroppings
        /**
          * Save cropping
          */
+        if(!isset($message->browserimagedata)) throw new \InvalidArgumentException('object browserimagdata empty');
+        if(!isset($message->canvasdata)) throw new \InvalidArgumentException('object canvasdata empty');
+
         $canvasData = json_encode($message->canvasdata);
         $browserimagedata = json_encode($message->browserimagedata);
 
