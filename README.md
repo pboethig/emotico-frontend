@@ -37,3 +37,4 @@ php artisan db:seed --class=EmoticoDatabaseSeeder
 ```sh
 ./vendor/bin/phpunit tests
 ```
+# pimcore-doc
